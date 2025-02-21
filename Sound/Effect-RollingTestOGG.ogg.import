@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Effect-RollingTestOGG.ogg-77f1f92e29601cbd8aecf55d17d5019a.oggstr"
+
+[deps]
+
+source_file="res://Sound/Effect-RollingTestOGG.ogg"
+dest_files=[ "res://.import/Effect-RollingTestOGG.ogg-77f1f92e29601cbd8aecf55d17d5019a.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

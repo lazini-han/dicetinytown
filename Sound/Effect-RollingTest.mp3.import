@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Effect-RollingTest.mp3-642e99b1396d99a3c1dbf4d3613c1fcd.mp3str"
+
+[deps]
+
+source_file="res://Sound/Effect-RollingTest.mp3"
+dest_files=[ "res://.import/Effect-RollingTest.mp3-642e99b1396d99a3c1dbf4d3613c1fcd.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0
