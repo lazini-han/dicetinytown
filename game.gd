@@ -15,12 +15,12 @@ func _ready():
 	randomize()  # Ensures different random numbers every time
 	# Load dice images into the array
 	dice_images = [
-		load("res://Images/dice-1.256x256.png"),
-		load("res://Images/dice-2.256x256.png"),
-		load("res://Images/dice-3.256x256.png"),
-		load("res://Images/dice-4.256x256.png"),
-		load("res://Images/dice-5.256x256.png"),
-		load("res://Images/dice-6.256x256.png")
+		load("res://Images/dice_1.png"),
+		load("res://Images/dice_2.png"),
+		load("res://Images/dice_3.png"),
+		load("res://Images/dice_4.png"),
+		load("res://Images/dice_5.png"),
+		load("res://Images/dice_6.png")
 	]
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
