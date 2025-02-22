@@ -4,7 +4,9 @@ var dice_images = []  # List to store dice images
 var roll_count = 0  # Track number of rolls
 var max_rolls = 3  # Maximum rolls allowed
 var roll_results = []  # Store all three rounds of results
-
+var dice1 = 1
+var dice2 = 1
+var dice3 = 1
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -30,18 +32,18 @@ func _ready():
 
 func _on_RollButton_pressed():
 	if roll_count < max_rolls:
-		var dice1 = randi() % 6  # First dice (1-6)
-		var dice2 = randi() % 6  # Second dice (1-6)
-		var dice3 = randi() % 6 # Third dice (1-6)
-		var total = dice1 + dice2 + dice3 + 3 # Sum of all dice
+		dice1 = randi() % 6 + 1  # First dice (1-6)
+		dice2 = randi() % 6 + 1 # Second dice (1-6)
+		dice3 = randi() % 6 + 1 # Third dice (1-6)
+		var total = dice1 + dice2 + dice3 # Sum of all dice
 		# Update dice images
-		$Dice1.texture = dice_images[dice1]
-		$Dice2.texture = dice_images[dice2]
-		$Dice3.texture = dice_images[dice3]
+		$Dice1.texture = dice_images[dice1-1]
+		$Dice2.texture = dice_images[dice2-1]
+		$Dice3.texture = dice_images[dice3-1]
 		$SumLabel.text = "Total: " + str(total)
 		
 		# Store this round's results
-		roll_results.append([dice1 + 1, dice2 + 1, dice3 + 1, total])
+		roll_results.append([dice1, dice2, dice3, total])
 		roll_count += 1  # Increase roll count
 		
 		# ✅ Play rolling sound effect
