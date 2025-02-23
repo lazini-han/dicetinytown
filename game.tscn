@@ -1,11 +1,15 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Images/dice_1.png" type="Texture" id=1]
 [ext_resource path="res://game.gd" type="Script" id=2]
 [ext_resource path="res://Sound/BGM-Test.mp3" type="AudioStream" id=3]
 [ext_resource path="res://Sound/Effect-RollingTest.mp3" type="AudioStream" id=4]
 [ext_resource path="res://Images/dice_outline_yellow.png" type="Texture" id=5]
-[ext_resource path="res://dice.gd" type="Script" id=6]
+[ext_resource path="res://dice0.gd" type="Script" id=6]
+[ext_resource path="res://Images/d6_outline.png" type="Texture" id=7]
+[ext_resource path="res://dice1.gd" type="Script" id=8]
+[ext_resource path="res://SelectedLabel.gd" type="Script" id=9]
+[ext_resource path="res://dice2.gd" type="Script" id=10]
 
 [node name="game" type="Node2D"]
 script = ExtResource( 2 )
@@ -24,6 +28,7 @@ margin_top = 72.0
 margin_right = 455.0
 margin_bottom = 86.0
 rect_scale = Vector2( 4, 4 )
+script = ExtResource( 9 )
 
 [node name="RollButton" type="Button" parent="."]
 margin_left = 395.0
@@ -42,14 +47,14 @@ margin_bottom = 521.0
 rect_scale = Vector2( 3, 3 )
 text = "Go to Score"
 
-[node name="Dice1" type="Sprite" parent="."]
+[node name="Dice0" type="Sprite" parent="."]
 position = Vector2( 450, 180 )
 scale = Vector2( 0.3, 0.3 )
 z_index = 10
 texture = ExtResource( 1 )
 script = ExtResource( 6 )
 
-[node name="Outline" type="TextureRect" parent="Dice1"]
+[node name="Outline" type="TextureRect" parent="Dice0"]
 visible = false
 anchor_left = -0.52
 anchor_top = -0.52
@@ -64,14 +69,14 @@ __meta__ = {
 "_edit_use_anchors_": true
 }
 
-[node name="Dice2" type="Sprite" parent="."]
+[node name="Dice1" type="Sprite" parent="."]
 position = Vector2( 510, 180 )
 scale = Vector2( 0.3, 0.3 )
 z_index = 10
 texture = ExtResource( 1 )
-script = ExtResource( 6 )
+script = ExtResource( 8 )
 
-[node name="Outline" type="TextureRect" parent="Dice2"]
+[node name="Outline" type="TextureRect" parent="Dice1"]
 visible = false
 anchor_left = -0.52
 anchor_top = -0.52
@@ -86,14 +91,14 @@ __meta__ = {
 "_edit_use_anchors_": true
 }
 
-[node name="Dice3" type="Sprite" parent="."]
+[node name="Dice2" type="Sprite" parent="."]
 position = Vector2( 570, 180 )
 scale = Vector2( 0.3, 0.3 )
 z_index = 10
 texture = ExtResource( 1 )
-script = ExtResource( 6 )
+script = ExtResource( 10 )
 
-[node name="Outline" type="TextureRect" parent="Dice3"]
+[node name="Outline" type="TextureRect" parent="Dice2"]
 visible = false
 anchor_left = -0.52
 anchor_top = -0.52
@@ -115,6 +120,11 @@ autoplay = true
 
 [node name="EffectRolling" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 720, 176 )
+scale = Vector2( 0.6, 0.6 )
+texture = ExtResource( 7 )
 
 [connection signal="pressed" from="RollButton" to="." method="_on_RollButton_pressed"]
 [connection signal="pressed" from="GotoScoreButton" to="." method="_on_GotoScoreButton_pressed"]

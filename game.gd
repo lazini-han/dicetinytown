@@ -1,20 +1,30 @@
 extends Node2D
 
+var dice = []
 var dice_images = []  # List to store dice images
+var dice_face = [1 , 1,  1]
+
+signal dice_selected_changed(new_dice_selected)
+var unselected = 4
+var dice_selected = unselected  setget set_dice_selected # 4: unselected, i: dice[i] selected
+func set_dice_selected(value):
+	dice_selected = value
+	emit_signal("dice_selected_changed", value)
+
 var roll_count = 0  # Track number of rolls
 var max_rolls = 3  # Maximum rolls allowed
 var roll_results = []  # Store all three rounds of results
-var dice1 = 1
-var dice2 = 1
-var dice3 = 1
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	randomize()  # Ensures different random numbers every time
+	
+	dice = [
+		get_node("Dice0"),
+		get_node("Dice1"),
+		get_node("Dice2")
+	]
 	# Load dice images into the array
 	dice_images = [
 		load("res://Images/dice_1.png"),
@@ -32,22 +42,20 @@ func _ready():
 
 func _on_RollButton_pressed():
 	if roll_count < max_rolls:
-		dice1 = randi() % 6 + 1  # First dice (1-6)
-		dice2 = randi() % 6 + 1 # Second dice (1-6)
-		dice3 = randi() % 6 + 1 # Third dice (1-6)
-		var total = dice1 + dice2 + dice3 # Sum of all dice
-		# Update dice images
-		$Dice1.texture = dice_images[dice1-1]
-		$Dice2.texture = dice_images[dice2-1]
-		$Dice3.texture = dice_images[dice3-1]
+		# ✅ Play rolling sound effect
+		$EffectRolling.play()
+		set_dice_selected(unselected)
+		for i in range(3):
+			dice_face[i] = randi() % 6 + 1  # First dice (1-6)
+			dice[i].texture = dice_images[dice_face[i]-1]
+			
+		var total = dice_face[0] + dice_face[1] + dice_face[2] # Sum of all dice
 		$SumLabel.text = "Total: " + str(total)
 		
 		# Store this round's results
-		roll_results.append([dice1, dice2, dice3, total])
+		roll_results.append([dice_face[0], dice_face[1], dice_face[2], total])
 		roll_count += 1  # Increase roll count
 		
-		# ✅ Play rolling sound effect
-		$EffectRolling.play()
 		
 		# Check if it's the last roll
 		if roll_count == max_rolls:
