@@ -1,15 +1,14 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Images/dice_1.png" type="Texture" id=1]
 [ext_resource path="res://game.gd" type="Script" id=2]
 [ext_resource path="res://Sound/BGM-Test.mp3" type="AudioStream" id=3]
 [ext_resource path="res://Sound/Effect-RollingTest.mp3" type="AudioStream" id=4]
 [ext_resource path="res://Images/dice_outline_yellow.png" type="Texture" id=5]
-[ext_resource path="res://dice0.gd" type="Script" id=6]
+[ext_resource path="res://dice.gd" type="Script" id=6]
 [ext_resource path="res://Images/d6_outline.png" type="Texture" id=7]
-[ext_resource path="res://dice1.gd" type="Script" id=8]
+[ext_resource path="res://box.gd" type="Script" id=8]
 [ext_resource path="res://SelectedLabel.gd" type="Script" id=9]
-[ext_resource path="res://dice2.gd" type="Script" id=10]
 
 [node name="game" type="Node2D"]
 script = ExtResource( 2 )
@@ -48,7 +47,7 @@ rect_scale = Vector2( 3, 3 )
 text = "Go to Score"
 
 [node name="Dice0" type="Sprite" parent="."]
-position = Vector2( 450, 180 )
+position = Vector2( 432, 184 )
 scale = Vector2( 0.3, 0.3 )
 z_index = 10
 texture = ExtResource( 1 )
@@ -70,11 +69,12 @@ __meta__ = {
 }
 
 [node name="Dice1" type="Sprite" parent="."]
-position = Vector2( 510, 180 )
+position = Vector2( 520, 184 )
 scale = Vector2( 0.3, 0.3 )
 z_index = 10
 texture = ExtResource( 1 )
-script = ExtResource( 8 )
+script = ExtResource( 6 )
+this_dice = 1
 
 [node name="Outline" type="TextureRect" parent="Dice1"]
 visible = false
@@ -92,11 +92,12 @@ __meta__ = {
 }
 
 [node name="Dice2" type="Sprite" parent="."]
-position = Vector2( 570, 180 )
+position = Vector2( 608, 184 )
 scale = Vector2( 0.3, 0.3 )
 z_index = 10
 texture = ExtResource( 1 )
-script = ExtResource( 10 )
+script = ExtResource( 6 )
+this_dice = 2
 
 [node name="Outline" type="TextureRect" parent="Dice2"]
 visible = false
@@ -121,10 +122,46 @@ autoplay = true
 [node name="EffectRolling" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="Box0" type="Sprite" parent="."]
+position = Vector2( 431, 184 )
+scale = Vector2( 0.6, 0.6 )
+texture = ExtResource( 7 )
+script = ExtResource( 8 )
+
+[node name="Box1" type="Sprite" parent="."]
+position = Vector2( 520, 184 )
+scale = Vector2( 0.6, 0.6 )
+texture = ExtResource( 7 )
+script = ExtResource( 8 )
+this_box_position = 1
+
+[node name="Box2" type="Sprite" parent="."]
+position = Vector2( 608, 184 )
+scale = Vector2( 0.6, 0.6 )
+texture = ExtResource( 7 )
+script = ExtResource( 8 )
+this_box_position = 2
+
+[node name="Box3" type="Sprite" parent="."]
 position = Vector2( 720, 176 )
 scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 7 )
+script = ExtResource( 8 )
+this_box_position = 3
+
+[node name="Box4" type="Sprite" parent="."]
+position = Vector2( 720, 272 )
+scale = Vector2( 0.6, 0.6 )
+texture = ExtResource( 7 )
+script = ExtResource( 8 )
+this_box_position = 4
+
+[node name="Box5" type="Sprite" parent="."]
+position = Vector2( 720, 368 )
+scale = Vector2( 0.6, 0.6 )
+texture = ExtResource( 7 )
+script = ExtResource( 8 )
+this_box_position = 5
 
 [connection signal="pressed" from="RollButton" to="." method="_on_RollButton_pressed"]
 [connection signal="pressed" from="GotoScoreButton" to="." method="_on_GotoScoreButton_pressed"]
