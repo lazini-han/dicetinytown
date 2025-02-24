@@ -1,29 +1,30 @@
-extends Sprite
+extends Area2D
+export var this_dice_number: int # 각 Sprite 마다 다른 값 설정
 
-export var this_dice: int # 각 Sprite 마다 다른 값 설정
-var unselected = 4
-	
-onready var game = get_parent()
+var dragging = false  # 드래그 여부
+var drag_offset = Vector2.ZERO  # 마우스 클릭한 위치 오프셋
+var sprite = null
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	game.connect("dice_selected_changed", self, "_update_selected")
-	
-func _update_selected(new_dice_selected):
-	if new_dice_selected == this_dice:
-		$Outline.visible = true;
-	else:
-		$Outline.visible = false
+	sprite = $Sprite  # 주사위의 Sprite 노드 가져오기
+	monitoring = true # 충돌 감지 활성화
+	monitorable = true # 다른 노드가 나를 감지 가능하게 설정
 
 func _input(event):
-	if event is InputEventMouseButton and event.pressed:
-		var mouse_pos = get_global_mouse_position()
-		var sprite_size = texture.get_size() * scale
-		var sprite_rect = Rect2(global_position - (sprite_size * 0.5), sprite_size)
-		
-		if sprite_rect.has_point(mouse_pos):
-			if(get_parent().dice_selected == this_dice):
-				get_parent().dice_selected = unselected
+	
+	if event is InputEventMouseButton:
+		if event.button_index == BUTTON_LEFT:
+			if event.pressed and _is_mouse_over(event.position):
+				dragging = true
+				drag_offset = global_position - event.position
 			else:
-				get_parent().dice_selected = this_dice
-		
+				dragging = false
+
+	elif event is InputEventMouseMotion and dragging:
+		global_position = event.position + drag_offset
+
+# 마우스가 주사위 위에 있는지 확인하는 함수
+func _is_mouse_over(mouse_pos):
+	var sprite_size = sprite.texture.get_size() * sprite.scale  # 크기 계산
+	var sprite_rect = Rect2(global_position - sprite_size / 2, sprite_size)  # 중심 기준 영역 계산
+	return sprite_rect.has_point(mouse_pos)

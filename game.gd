@@ -47,12 +47,12 @@ func _ready():
 		load("res://Images/dice_6.png")
 	]
 	positions = [
-		$Box0.position,
-		$Box1.position,
-		$Box2.position,
-		$Box3.position,
-		$Box4.position,
-		$Box5.position
+		$Box0_Init.position,
+		$Box1_Init.position,
+		$Box2_Init.position,
+		$Dice_Box_0.position,
+		$Dice_Box_1.position,
+		$Dice_Box_2.position
 	]
 	
 #func _process(delta):
@@ -69,7 +69,7 @@ func _on_RollButton_pressed():
 		
 		for i in range(3):
 			dice_face[i] = randi() % 6 + 1  # First dice (1-6)
-			dice[i].texture = dice_images[dice_face[i]-1]
+			dice[i].sprite.texture = dice_images[dice_face[i]-1]
 			
 		var total = dice_face[0] + dice_face[1] + dice_face[2] # Sum of all dice
 		$SumLabel.text = "Total: " + str(total)
