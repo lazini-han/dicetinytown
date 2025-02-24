@@ -7,8 +7,6 @@
 [ext_resource path="res://Images/dice_outline_yellow.png" type="Texture" id=5]
 [ext_resource path="res://dice.gd" type="Script" id=6]
 [ext_resource path="res://Images/d6_outline.png" type="Texture" id=7]
-[ext_resource path="res://box.gd" type="Script" id=8]
-[ext_resource path="res://SelectedLabel.gd" type="Script" id=9]
 [ext_resource path="res://Dice_Box.gd" type="Script" id=10]
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -28,6 +26,26 @@ extents = Vector2( 50, 50 )
 
 [sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 50, 50 )
+
+[sub_resource type="GDScript" id=8]
+script/source = "extends Label
+var unselected = 4
+
+onready var game = get_parent()
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	game.connect(\"dice_selected_changed\", self, \"_update_selected\")
+	
+func _update_selected(new_dice_selected):
+	if new_dice_selected == unselected:
+		text = \"\"
+	else:
+		text = str(get_parent().dice_face[new_dice_selected])
+	
+"
+
+[sub_resource type="GDScript" id=7]
 
 [node name="game" type="Node2D"]
 script = ExtResource( 2 )
@@ -128,7 +146,6 @@ margin_left = 100.0
 margin_right = 140.0
 margin_bottom = 14.0
 rect_scale = Vector2( 5, 5 )
-text = "0"
 
 [node name="Dice_Box_1" type="Area2D" parent="."]
 position = Vector2( 720, 276 )
@@ -146,7 +163,6 @@ margin_left = 100.0
 margin_right = 140.0
 margin_bottom = 14.0
 rect_scale = Vector2( 5, 5 )
-text = "1"
 
 [node name="Dice_Box_2" type="Area2D" parent="."]
 position = Vector2( 720, 376 )
@@ -164,7 +180,6 @@ margin_left = 100.0
 margin_right = 108.0
 margin_bottom = 14.0
 rect_scale = Vector2( 5, 5 )
-text = "2"
 
 [node name="SumLabel" type="Label" parent="."]
 margin_left = 427.0
@@ -181,7 +196,7 @@ margin_top = 72.0
 margin_right = 455.0
 margin_bottom = 86.0
 rect_scale = Vector2( 4, 4 )
-script = ExtResource( 9 )
+script = SubResource( 8 )
 
 [node name="RollButton" type="Button" parent="."]
 margin_left = 395.0
@@ -213,23 +228,21 @@ visible = false
 position = Vector2( 431, 184 )
 scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 7 )
-script = ExtResource( 8 )
+script = SubResource( 7 )
 
 [node name="Box1_Init" type="Sprite" parent="."]
 visible = false
 position = Vector2( 520, 184 )
 scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 7 )
-script = ExtResource( 8 )
-this_box_position = 1
+script = SubResource( 7 )
 
 [node name="Box2_Init" type="Sprite" parent="."]
 visible = false
 position = Vector2( 608, 184 )
 scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 7 )
-script = ExtResource( 8 )
-this_box_position = 2
+script = SubResource( 7 )
 
 [connection signal="pressed" from="RollButton" to="." method="_on_RollButton_pressed"]
 [connection signal="pressed" from="GotoScoreButton" to="." method="_on_GotoScoreButton_pressed"]
