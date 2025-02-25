@@ -2,8 +2,6 @@ extends Area2D
 export var this_box_number: int # 각 Sprite 마다 다른 값 설정
 var occupied = null
 
-onready var label = $Label  # 슬롯의 라벨 가져오기
-
 
 func _ready():
 	add_to_group("DiceBox")
@@ -20,15 +18,8 @@ func _on_area_entered(area):
 	# 그룹이나 다른 조건을 통해서 충돌한 노드가 실제 주사위인지 확인할 수 있습니다.
 	if not area.has_method("get"):  # 예시 조건; 필요에 따라 수정
 		return
-	var idice = area.get("this_dice_number")
-	label.text = str(get_parent().dice_face[idice])
-	
+
 func _on_area_exited(area):
 	# 만약 exiting 하는 주사위가 슬롯에 할당된 주사위라면 label을 초기화합니다.
 	if occupied == area:
 		occupied = null
-		label.text = ""
-	# 슬롯이 비어있고 preview 중인 경우에만 label 초기화
-	elif not occupied:
-		label.text = ""
-		

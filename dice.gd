@@ -1,23 +1,51 @@
 extends Area2D
 export var this_dice_number: int # 각 Sprite 마다 다른 값 설정
 
+const DICE_IMAGES = [
+	preload("res://Images/dice_1.png"),
+	preload("res://Images/dice_2.png"),
+	preload("res://Images/dice_3.png"),
+	preload("res://Images/dice_4.png"),
+	preload("res://Images/dice_5.png"),
+	preload("res://Images/dice_6.png")
+]
+
 var dragging = false  # 드래그 여부
 var drag_offset = Vector2.ZERO  # 마우스 클릭한 위치 오프셋
 var sprite = null
 var start_position
 var collided_area = null  # 충돌한 Area2D
 var current_box = null # 현재 상자
+var init_positions = []
 
 func _ready():
-	start_position = global_position
 	sprite = $Sprite  # 주사위의 Sprite 노드 가져오기
+	sprite.texture = DICE_IMAGES[0] # 주사위 초기 눈금
+	sprite.visible = false # 주사위 초기 감춤
+	var nodes = get_tree().get_nodes_in_group("target_group")
+	init_positions = [
+		get_node("../Box0_Init").position,
+		get_node("../Box1_Init").position,
+		get_node("../Box2_Init").position
+	]
+	EventBus.connect("roll_dice", self, "_on_roll_dice")
+	randomize()
+	
+	start_position = global_position
 	monitoring = true # 충돌 감지 활성화
 	monitorable = true # 다른 노드가 나를 감지 가능하게 설정
 	connect("area_entered", self, "_on_area_entered")
 	connect("area_exited", self, "_on_area_exited")
 	
+func _on_roll_dice():
+	sprite.visible = true
+	var dice_result = randi() % 6 + 1  # 1-6
+	print(this_dice_number, " dice rolled", dice_result)
+	self.position = init_positions[this_dice_number]
+	sprite.texture = DICE_IMAGES[dice_result - 1] # 주사위 초기 눈금
+	EventBus.emit_signal("roll_result", this_dice_number, dice_result)
+
 func _input(event):
-	
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
 		if event.pressed:
 			#마우스 눌림 : 해당 주사위 위에 있는 지 확인 후 드래그 시작
@@ -58,5 +86,11 @@ func check_drop_position():
 		global_position = collided_area.global_position  # 슬롯 위치로 이동
 		collided_area.occupied = self
 		current_box = collided_area
+		
+		EventBus.emit_signal("dice_in_box", this_dice_number, current_box)
+		
 	else:
-		global_position = get_parent().positions[this_dice_number]
+		global_position = init_positions[this_dice_number]
+		
+		EventBus.emit_signal("dice_out_of_box", this_dice_number)
+		
