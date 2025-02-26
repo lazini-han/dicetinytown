@@ -31,29 +31,13 @@ extents = Vector2( 35, 35 )
 extents = Vector2( 35, 35 )
 
 [sub_resource type="GDScript" id=8]
-script/source = "extends Label
-var unselected = 4
-
-onready var game = get_parent()
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	game.connect(\"dice_selected_changed\", self, \"_update_selected\")
-	
-func _update_selected(new_dice_selected):
-	if new_dice_selected == unselected:
-		text = \"\"
-	else:
-		text = str(get_parent().dice_face[new_dice_selected])
-	
-"
 
 [sub_resource type="GDScript" id=7]
 
 [node name="game" type="Node2D"]
 
 [node name="Dice0" type="Area2D" parent="."]
-position = Vector2( 432, 184 )
+position = Vector2( 464, 192.4 )
 script = ExtResource( 6 )
 
 [node name="Sprite" type="Sprite" parent="Dice0"]
@@ -79,7 +63,7 @@ __meta__ = {
 shape = SubResource( 1 )
 
 [node name="Dice1" type="Area2D" parent="."]
-position = Vector2( 520, 184 )
+position = Vector2( 545.6, 192 )
 script = ExtResource( 6 )
 this_dice_number = 1
 
@@ -106,7 +90,7 @@ __meta__ = {
 shape = SubResource( 2 )
 
 [node name="Dice2" type="Area2D" parent="."]
-position = Vector2( 608, 184 )
+position = Vector2( 629, 192.4 )
 script = ExtResource( 6 )
 this_dice_number = 2
 
@@ -133,7 +117,7 @@ __meta__ = {
 shape = SubResource( 3 )
 
 [node name="Dice_Box_0" type="Area2D" parent="."]
-position = Vector2( 720, 176 )
+position = Vector2( 435, 304 )
 scale = Vector2( 0.6, 0.6 )
 script = ExtResource( 10 )
 
@@ -144,7 +128,7 @@ texture = ExtResource( 7 )
 shape = SubResource( 4 )
 
 [node name="Dice_Box_1" type="Area2D" parent="."]
-position = Vector2( 720, 276 )
+position = Vector2( 547, 306 )
 scale = Vector2( 0.6, 0.6 )
 script = ExtResource( 10 )
 this_box_number = 1
@@ -156,7 +140,7 @@ texture = ExtResource( 7 )
 shape = SubResource( 5 )
 
 [node name="Dice_Box_2" type="Area2D" parent="."]
-position = Vector2( 720, 376 )
+position = Vector2( 659, 306 )
 scale = Vector2( 0.6, 0.6 )
 script = ExtResource( 10 )
 this_box_number = 2
@@ -168,36 +152,39 @@ texture = ExtResource( 7 )
 shape = SubResource( 6 )
 
 [node name="Label_0" type="Label" parent="."]
-margin_left = 780.0
-margin_top = 176.0
-margin_right = 820.0
-margin_bottom = 190.0
+margin_left = 416.0
+margin_top = 354.0
+margin_right = 426.0
+margin_bottom = 368.0
 rect_scale = Vector2( 5, 5 )
+text = "0"
 script = ExtResource( 2 )
 
 [node name="Label_1" type="Label" parent="."]
-margin_left = 780.0
-margin_top = 276.0
-margin_right = 820.0
-margin_bottom = 290.0
+margin_left = 523.0
+margin_top = 358.0
+margin_right = 533.0
+margin_bottom = 372.0
 rect_scale = Vector2( 5, 5 )
+text = "1"
 script = ExtResource( 2 )
 this_label_number = 1
 
 [node name="Label_2" type="Label" parent="."]
-margin_left = 780.0
-margin_top = 376.0
-margin_right = 788.0
-margin_bottom = 390.0
+margin_left = 638.0
+margin_top = 354.0
+margin_right = 648.0
+margin_bottom = 368.0
 rect_scale = Vector2( 5, 5 )
+text = "2"
 script = ExtResource( 2 )
 this_label_number = 2
 
 [node name="SumLabel" type="Label" parent="."]
-margin_left = 427.0
-margin_top = 397.0
-margin_right = 474.0
-margin_bottom = 411.0
+margin_left = 713.6
+margin_top = 168.0
+margin_right = 760.6
+margin_bottom = 182.0
 rect_scale = Vector2( 4, 4 )
 text = "Total: 0"
 script = ExtResource( 11 )
@@ -212,10 +199,10 @@ rect_scale = Vector2( 4, 4 )
 script = SubResource( 8 )
 
 [node name="RollButton" type="Button" parent="."]
-margin_left = 395.0
-margin_top = 277.0
-margin_right = 476.0
-margin_bottom = 297.0
+margin_left = 424.0
+margin_top = 80.0
+margin_right = 505.0
+margin_bottom = 100.0
 rect_scale = Vector2( 3, 3 )
 text = "Roll 3 Dice"
 script = ExtResource( 8 )
@@ -240,21 +227,21 @@ autoplay = true
 
 [node name="Box0_Init" type="Sprite" parent="." groups=["dice_init_box"]]
 visible = false
-position = Vector2( 431, 184 )
+position = Vector2( 462.4, 184.4 )
 scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 7 )
 script = SubResource( 7 )
 
 [node name="Box1_Init" type="Sprite" parent="." groups=["dice_init_box"]]
 visible = false
-position = Vector2( 520, 184 )
+position = Vector2( 544, 184 )
 scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 7 )
 script = SubResource( 7 )
 
 [node name="Box2_Init" type="Sprite" parent="." groups=["dice_init_box"]]
 visible = false
-position = Vector2( 608, 184 )
+position = Vector2( 627.4, 184.4 )
 scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 7 )
 script = SubResource( 7 )
