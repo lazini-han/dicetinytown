@@ -9,7 +9,7 @@ func _on_change_label(dice_in_box, dice_value):
 	print("_on_change_label:",dice_in_box, dice_value)
 	for i in range(3):
 		if i == this_label_number:
-			if dice_in_box[i] == GameManager.no_dice:
+			if dice_in_box[i] == null:
 				text = ""
 			else:
 				text = str(dice_value[dice_in_box[i]])

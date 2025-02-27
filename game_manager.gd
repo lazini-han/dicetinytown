@@ -1,11 +1,14 @@
 extends Node
 
 # 게임 매니저 노드 
-const no_dice = 3 # for mark in box
 var game_state = {
 	"this_round": 0,	"last_round": 3,
-	"dice_value": [0, 0, 0],
-	"dice_in_box": [no_dice, no_dice, no_dice],
+	"dice_value": { # dice_values
+		"Dice_0":0,
+		"Dice_1":0,
+		"Dice_2":0
+		},
+	"dice_in_box": [null, null, null], # dice_names in boxes
 	"score": 0,	
 }
 var total_rolled = 0
@@ -20,31 +23,37 @@ func _ready():
 func _on_roll_dice():
 	game_state["this_round"] += 1
 	total_rolled = 0
-	game_state["dice_in_box"] = [no_dice, no_dice, no_dice]
+	
+	game_state["dice_in_box"] =  [null, null, null]
 	EventBus.emit_signal("change_label", game_state["dice_in_box"], game_state["dice_value"])
+	
 	if game_state["this_round"] == game_state["last_round"]: 
 		EventBus.emit_signal("cannot_roll")
 		EventBus.emit_signal("show_score_button")
 
-func _on_roll_result(dice, value):
-	game_state["dice_value"][dice] = value
-	total_rolled += value
-	game_state["score"] += value
+func _on_roll_result(dice_name, dice_value):
+	print(dice_name, " rolled : ", dice_value)
+	game_state["dice_value"][dice_name] = dice_value
+	#print(game_state["dice_value"])
+	total_rolled += dice_value
+	game_state["score"] += dice_value
 	EventBus.emit_signal("change_total", total_rolled)
 	
 func _on_go_to_score():
 	get_tree().change_scene("res://ending_scene.tscn")
 	
-func _on_dice_in_box(dice, box_node):
+func _on_dice_in_box(dice_name, box_node):
 	var box = box_node.this_box_number
+	print(dice_name, " in ", box)
 	for i in range(3):
-		if game_state["dice_in_box"][i] == dice:
-			game_state["dice_in_box"][i] = no_dice	
-	game_state["dice_in_box"][box] = dice
+		if game_state["dice_in_box"][i] == dice_name:
+			game_state["dice_in_box"][i] = null	
+	game_state["dice_in_box"][box] = dice_name
 	EventBus.emit_signal("change_label", game_state["dice_in_box"], game_state["dice_value"])
 	
-func _on_dice_out_of_box(dice):
+func _on_dice_out_of_box(dice_name):
+	print(dice_name, " out of box")
 	for i in range(3):
-		if game_state["dice_in_box"][i] == dice:
-			game_state["dice_in_box"][i] = no_dice	
+		if game_state["dice_in_box"][i] == dice_name:
+			game_state["dice_in_box"][i] = null
 	EventBus.emit_signal("change_label", game_state["dice_in_box"], game_state["dice_value"])
