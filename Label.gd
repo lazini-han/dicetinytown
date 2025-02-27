@@ -6,7 +6,6 @@ func _ready():
 	EventBus.connect("change_label", self, "_on_change_label")
 
 func _on_change_label(dice_in_box, dice_value):
-	print("_on_change_label:",dice_in_box, dice_value)
 	for i in range(3):
 		if i == this_label_number:
 			if dice_in_box[i] == null:
