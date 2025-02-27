@@ -1,6 +1,8 @@
 extends Area2D
 export var this_dice_number: int # 각 Sprite 마다 다른 값 설정
 
+const scale_init = Vector2(1.0, 1.0)
+const scale_picked = Vector2(0.8, 0.8)
 const DICE_IMAGES = [
 	preload("res://Images/dice_1.png"),
 	preload("res://Images/dice_2.png"),
@@ -51,6 +53,8 @@ func _input(event):
 			#마우스 눌림 : 해당 주사위 위에 있는 지 확인 후 드래그 시작
 			if _is_mouse_over(event.position):
 				dragging = true
+				scale = scale_picked
+				
 				start_position = global_position
 				drag_offset = global_position - event.position
 				if current_box and current_box.occupied == self:
@@ -60,6 +64,7 @@ func _input(event):
 			# 마우스 릴리즈: 실제로 드래그 중요이었을 경우에만 체크
 			if dragging:
 				dragging = false
+				scale = scale_init
 				check_drop_position()
 
 	elif event is InputEventMouseMotion and dragging:
