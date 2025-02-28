@@ -8,7 +8,7 @@ extends Label
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	EventBus.connect("change_total", self, "_on_change_total")
+	EventBus.connect("update_total", self, "_on_change_total")
 
 func _on_change_total(total):
 	text = "Total: " + str(total)

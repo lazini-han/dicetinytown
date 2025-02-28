@@ -18,7 +18,7 @@ var drag_offset = Vector2.ZERO  # 마우스 클릭한 위치 오프셋
 var sprite = null
 var start_position
 var collided_area = null  # 충돌한 Area2D
-var current_box = null # 현재 상자
+var current_slot = null # 현재 상자
 
 func _ready():
 	dice_name = get_parent().name
@@ -33,7 +33,8 @@ func _ready():
 	monitorable = true # 다른 노드가 나를 감지 가능하게 설정
 	connect("area_entered", self, "_on_area_entered")
 	connect("area_exited", self, "_on_area_exited")
-	
+	EventBus.connect("teleport_dice", self, "_on_teleport_dice")
+
 	
 func _on_roll_dice():
 	sprite.visible = true # 처음 굴릴때 주사위 등장
@@ -55,9 +56,9 @@ func _input(event):
 				
 				start_position = global_position
 				drag_offset = global_position - event.position
-				if current_box and current_box.occupied == self:
-					current_box.occupied = null  # 주사위가 슬롯을 떠날 준비 (슬롯 비우기)
-					current_box = null
+				#if current_box and current_box.occupied == self:
+				#	current_box.occupied = null  # 주사위가 슬롯을 떠날 준비 (슬롯 비우기)
+				#	current_box = null
 		else:
 			# 마우스 릴리즈: 실제로 드래그 중요이었을 경우에만 체크
 			if dragging:
@@ -69,32 +70,68 @@ func _input(event):
 		global_position = event.position + drag_offset
 
 # 마우스가 주사위 위에 있는지 확인하는 함수
-func _is_mouse_over(mouse_pos):
-	var sprite_size = sprite.texture.get_size() * sprite.scale  # 크기 계산
-	var sprite_rect = Rect2(global_position - sprite_size / 2, sprite_size)  # 중심 기준 영역 계산
-	return sprite_rect.has_point(mouse_pos)
+#func _is_mouse_over(mouse_pos):
+#	var sprite_size = sprite.texture.get_size() * sprite.scale  # 크기 계산
+#	var sprite_rect = Rect2(global_position - sprite_size / 2, sprite_size)  # 중심 기준 영역 계산
+#	return sprite_rect.has_point(mouse_pos)
+#func _is_mouse_over(mouse_pos: Vector2) -> bool:
+#	return $CollisionShape2D.shape and $CollisionShape2D.shape.collide_point(mouse_pos)
+#func _is_mouse_over(mouse_pos: Vector2) -> bool:
+#	return $CollisionShape2D.shape and $CollisionShape2D.get_global_transform().xform_inv(mouse_pos) in $CollisionShape2D.shape.get_rect()
+
+func _is_mouse_over(mouse_pos: Vector2) -> bool:
+	# RectangleShape2D 크기 가져오기
+	var shape = $CollisionShape2D.shape as RectangleShape2D
+	var half_size = shape.extents  # 반 크기 (extents는 절반 크기를 반환)
+
+	# CollisionShape2D의 위치 기준으로 Rect2 생성
+	var rect = Rect2(
+		$CollisionShape2D.global_position - half_size,  # 좌상단 좌표
+		half_size * 2  # 전체 크기
+	)
+
+	# 마우스 위치가 이 Rect2 안에 있는지 확인
+	return rect.has_point(mouse_pos)
+
 
 func _on_area_entered(area):
 	if not area.is_in_group("DiceBox"):
 		return # 다이스 박스가 아닌 충돌은 무시
-	if area.occupied == null: # 슬롯 비어있는 경우
-		collided_area = area  # 충돌한 슬롯 저장
+		
+	print("[dice.gd] ", area.name, " Area Enter")
+	collided_area = area  # 충돌한 슬롯 저장
 
 func _on_area_exited(area):
 	if collided_area == area:
+		print("[dice.gd] ", area.name, " Area Exit")
 		collided_area = null  # 충돌했던 슬롯에서 벗어남
 		
 
 func check_drop_position():
-	if collided_area and collided_area.occupied == null:  # 충돌한 슬롯이 있을 경우
-		global_position = collided_area.global_position  # 슬롯 위치로 이동
-		collided_area.occupied = self
-		current_box = collided_area
+	if collided_area: # 충돌한 슬롯이 있을 경우
+		global_position = collided_area.global_position  # 슬롯 위치로 주사위 정렬	
+		current_slot = collided_area.name # 현재 들어간 슬롯 이름
 		
-		EventBus.emit_signal("dice_in_box", dice_name, current_box)
+		print("[dice.gd] ", dice_name, " in ", current_slot)
+		EventBus.emit_signal("dice_in_slot", dice_name, current_slot)		
 		
 	else:
-		global_position = get_parent().get_node_or_null("InitBox").global_position
-				
-		EventBus.emit_signal("dice_out_of_box", dice_name)
+		if current_slot == null: # 초기 위치에서 초기 위치로 돌아가는 경우 
+			global_position = get_parent().get_node_or_null("InitBox").global_position
+		
+		else:	# 슬롯에서 초기 위치로 돌아가는 경우
+			global_position = get_parent().get_node_or_null("InitBox").global_position
+			EventBus.emit_signal("dice_out_of_slot", dice_name, current_slot)
+			current_slot = null
+		
+func _on_teleport_dice(tele_slot_name, tele_dice_name, tele_dice_value):	
+	if tele_dice_name == dice_name:
+		if tele_slot_name == null:
+			print("[dice.gd] ", tele_slot_name, " = ", null)
+			global_position = get_parent().get_node_or_null("InitBox").global_position	
+		else:
+			print("[dice.gd] ", tele_slot_name, " = ", tele_slot_name)
+			current_slot = tele_slot_name
+			global_position = get_node("/root/game").get_node(tele_slot_name).global_position
+		
 		
