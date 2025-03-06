@@ -12,10 +12,11 @@ var hover_texture = preload("res://Images/tile_filled.png")
 
 func _ready():
 	if Engine.is_editor_hint():
-		generate_board()  # Editor에서 보드를 생성
-	else:
-		generate_board()
-		setup_game_logic()  # 실제 게임 로직 실행
+		#generate_board()  # Editor에서 보드를 생성
+		pass
+	#else:
+		#generate_board()
+		#setup_game_logic()  # 실제 게임 로직 실행
 
 # 🛠️ Editor에서 보드를 생성하는 함수
 func generate_board():
@@ -41,6 +42,7 @@ func setup_game_logic():
 
 func _on_tile_hover(tile):
 	if not tile.get_meta("filled"):
+		tile.texture = filled_texture
 		tile.modulate = Color(1, 1, 1, 0.5)  # 반투명 효과
 
 func _on_tile_clicked(event, tile):

@@ -18,6 +18,17 @@ var game_state = {
 		"Slot_Building": null,
 		"Slot_Nature": null
 		}, 
+	"board": [ # game board
+		[0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0]
+		],
 	"score": 0,	
 }
 
@@ -60,7 +71,7 @@ func _on_roll_result(dice_name, dice_value):
 	
 	
 func _on_go_to_score():
-	get_tree().change_scene("res://ending_scene.tscn")
+	get_tree().change_scene("res://Scenes/ending_scene.tscn")
 	
 func _on_dice_in_slot(dice_name, slot_name):
 	print(dice_name, " in ", slot_name)

@@ -6,4 +6,4 @@ func _ready():
 
 
 func _on_GotoMenuButton_pressed():
-	get_tree().change_scene("res://start_menu.tscn")
+	get_tree().change_scene("res://Scenes/start_menu.tscn")
