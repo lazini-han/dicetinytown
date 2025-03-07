@@ -8,18 +8,23 @@ func get_state_enum():
 
 func enter():
 	print("상태 진입: READY")
+	# 주사위 굴림 활성화
 	Eventbus.emit_signal("button_roll_dice",true)
+	
+	# 주사위 확정 버튼 비활성화
 	Eventbus.emit_signal("button_confirm_dice",false)
-	#$Button_Roll_Dice.disabled = false
-	# 게임 시작 준비 상태 진입 로직
-	# 예: 턴 시작 메시지 표시, 주사위 활성화 등
 	
 func exit():
 	print("상태 종료: READY")
+	# 주사위 굴림 버튼 비활성화
 	Eventbus.emit_signal("button_roll_dice",false)
+
+	# 주사위 확정 버튼 비활성화
 	Eventbus.emit_signal("button_confirm_dice",true)
-	# READY 상태 종료 시 필요한 처리
+	# 주사위 이동 활성화
+	#Eventbus.emit_signal("dice_movable",true)
 	
-func process(delta):
+		
+#func process(delta):
 	# READY 상태에서의 프레임별 처리 로직
-	pass
+#	pass

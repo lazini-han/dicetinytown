@@ -20,10 +20,10 @@ func _on_Button_Roll_Dice_pressed():
 			dice.queue_free()
 		dice_list.clear()
 	create_dice()
-	Eventbus.emit_signal("roll_dice")
+	Eventbus.emit_signal("state_changed","DICE_FREE")
 
 func _on_Button_Confirm_pressed():
-	Eventbus.emit_signal("confirm_dice")
+	Eventbus.emit_signal("state_changed","READY")
 
 func _on_button_roll_dice(active):
 	$Button_Roll_Dice.disabled = not(active)

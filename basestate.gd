@@ -18,6 +18,6 @@ func exit():
 	pass
 
 # 이 상태에서의 처리 로직
-func process(delta):
+#func process(delta):
 	# 자식 클래스에서 오버라이드
-	pass
+	#pass

@@ -4,15 +4,15 @@ extends "res://basestate.gd"
 
 func get_state_enum():
 	# 부모 노드에서 TurnState.READY 반환
-	return get_parent().TurnState.DICE_3_OCCUPIED
+	return get_parent().TurnState.DICE_OCCUPIED
 
 func enter():
-	print("상태 진입: DICE 3 OCCUPIED")
+	print("상태 진입: DICE OCCUPIED")
 	# 게임 시작 준비 상태 진입 로직
 	# 예: 턴 시작 메시지 표시, 주사위 활성화 등
 	
 func exit():
-	print("상태 종료: DICE 3 OCCUPIED")
+	print("상태 종료: DICE OCCUPIED")
 	# READY 상태 종료 시 필요한 처리
 	
 func process(delta):

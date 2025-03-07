@@ -15,6 +15,6 @@ func exit():
 	print("상태 종료: DICE_FREE")
 	# READY 상태 종료 시 필요한 처리
 	
-func process(delta):
+#func process(delta):
 	# READY 상태에서의 프레임별 처리 로직
-	pass
+	#pass
