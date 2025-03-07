@@ -1,0 +1,55 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Scenes/dice_panel.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/panel_1.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/panel_3.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/panel_2.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/states_manager.gd" type="Script" id=5]
+[ext_resource path="res://Scenes/state_ready.gd" type="Script" id=6]
+[ext_resource path="res://Scenes/state_dicefree.gd" type="Script" id=7]
+[ext_resource path="res://Scenes/state_dice1occupied.gd" type="Script" id=8]
+[ext_resource path="res://Scenes/state_dice2occupied.gd" type="Script" id=9]
+[ext_resource path="res://Scenes/state_dice3occupied.gd" type="Script" id=10]
+
+[node name="stage_1" type="Node2D"]
+
+[node name="Turn_States" type="Node" parent="."]
+script = ExtResource( 5 )
+
+[node name="ReadyState" type="Node" parent="Turn_States"]
+script = ExtResource( 6 )
+
+[node name="DiceFreeState" type="Node" parent="Turn_States"]
+script = ExtResource( 7 )
+
+[node name="Dice1OccupiedState" type="Node" parent="Turn_States"]
+script = ExtResource( 8 )
+
+[node name="Dice2OccupiedState" type="Node" parent="Turn_States"]
+script = ExtResource( 9 )
+
+[node name="Dice3OccupiedState" type="Node" parent="Turn_States"]
+script = ExtResource( 10 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+margin_right = 1280.0
+margin_bottom = 720.0
+color = Color( 0.195313, 0.195313, 0.195313, 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Dice_Panel" parent="." instance=ExtResource( 1 )]
+position = Vector2( 20, 20 )
+
+[node name="Panel_1" parent="." instance=ExtResource( 2 )]
+position = Vector2( 38, 192 )
+
+[node name="Panel_2" parent="Panel_1" instance=ExtResource( 4 )]
+position = Vector2( 0, 160 )
+
+[node name="Panel_3" parent="Panel_1/Panel_2" instance=ExtResource( 3 )]
+position = Vector2( 0, 160 )

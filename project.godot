@@ -15,14 +15,17 @@ run/main_scene="res://Scenes/start_menu.tscn"
 
 [autoload]
 
-EventBus="*res://Src/event_bus.gd"
-GameManager="*res://Src/game_manager.gd"
+Eventbus="*res://eventbus.gd"
 
 [display]
 
 window/size/width=1280
 window/size/height=720
 window/size/resizable=false
+
+[editor]
+
+script_templates_search_path="res://addons/xsm/templates/"
 
 [gui]
 
