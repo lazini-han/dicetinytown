@@ -48,13 +48,12 @@ func change_state(new_state_enum):
 	if current_state_node != null:
 		current_state_node.enter()
 	
-	#Eventbus.emit_signal("state_changed", current_state) 
-	print("state_changed to ", current_state)
+	print("state_changed to STATE ", current_state)
 	
 # 외부에서 상태 변화 신호를 받아서 상태 변경해주기
 func _on_state_changed(new_state_name): 
+	print("emit state changging to ", new_state_name, " ", TurnState[new_state_name])
 	var new_state_enum = TurnState[new_state_name]
-	#print("emit ",new_state_enum)
 	change_state(new_state_enum)
 
 # 현재 상태 열거형 값 반환
