@@ -12,7 +12,6 @@ config_version=4
 
 config/name="DiceTinyTown-Steam"
 run/main_scene="res://Scenes/start_menu.tscn"
-config/icon="res://icon.png"
 
 [autoload]
 
@@ -47,4 +46,3 @@ quality/shading/force_vertex_shading.mobile=false
 quality/shading/force_lambert_over_burley.mobile=false
 quality/shading/force_blinn_over_ggx.mobile=false
 quality/shadows/light_culling=false
-environment/default_environment="res://default_env.tres"
