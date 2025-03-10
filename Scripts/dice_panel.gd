@@ -39,9 +39,7 @@ func _on_button_confirm_dice(active): # Confirm 버튼 활성화 변경
 
 
 func create_dice(): # 주사위를 DICE_NUMBER 만큼 생성하면서 랜덤값과 인덱스 할당
-	for index in range(0,DICE_NUMBER):
-		print("Creating dice %d at position: %s" % [index, positions[index]])
-		
+	for index in range(0,DICE_NUMBER):		
 		var new_dice = dice_scene.instance()
 		new_dice.position = positions[index] 
 		
@@ -53,4 +51,6 @@ func create_dice(): # 주사위를 DICE_NUMBER 만큼 생성하면서 랜덤값�
 		
 		var dice_value = randi() % 6 + 1 # 1-6 랜덤값 결정
 		dice_list[index].set_dice(index, dice_value)
+		
+		print("Creating dice %d at position: %s with value: %d" % [index, positions[index], dice_value])
 		
