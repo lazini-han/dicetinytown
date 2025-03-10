@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://Scenes/start_menu.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/Others/start_menu.gd" type="Script" id=1]
 
 [node name="StartMenu" type="Control"]
 margin_right = 40.0
@@ -41,6 +41,7 @@ layer = -1
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
 margin_right = 1280.0
 margin_bottom = 720.0
+mouse_filter = 2
 color = Color( 0.195313, 0.195313, 0.195313, 1 )
 __meta__ = {
 "_edit_lock_": true

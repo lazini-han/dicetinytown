@@ -15,7 +15,7 @@ run/main_scene="res://Scenes/start_menu.tscn"
 
 [autoload]
 
-Eventbus="*res://eventbus.gd"
+Eventbus="*res://Scripts/NoConnect/event_bus.gd"
 
 [display]
 
@@ -30,6 +30,10 @@ script_templates_search_path="res://addons/xsm/templates/"
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
 
 [physics]
 

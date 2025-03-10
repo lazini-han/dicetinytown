@@ -1,26 +1,67 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scenes/dice_panel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/panel_1.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/panel_3.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/panel_2.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scenes/states_manager.gd" type="Script" id=5]
-[ext_resource path="res://Scenes/state_ready.gd" type="Script" id=6]
-[ext_resource path="res://Scenes/state_dicefree.gd" type="Script" id=7]
-[ext_resource path="res://Scenes/state_diceoccupied.gd" type="Script" id=8]
+[ext_resource path="res://Scripts/states_manager.gd" type="Script" id=5]
+[ext_resource path="res://Scripts/state_ready.gd" type="Script" id=6]
+[ext_resource path="res://Scripts/state_dicefree.gd" type="Script" id=7]
+[ext_resource path="res://Scripts/state_diceoccupied.gd" type="Script" id=8]
+[ext_resource path="res://Scenes/stage_1.gd" type="Script" id=9]
 
-[node name="stage_1" type="Node2D"]
+[sub_resource type="GDScript" id=2]
+script/source = "extends Area2D
 
-[node name="Turn_States" type="Node" parent="."]
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = \"text\"
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass
+
+
+func _on_Area2D_mouse_entered():
+	print(\"mouse enter\")
+	pass # Replace with function body.
+
+
+func _on_Area2D_mouse_exited():
+	print(\"mouse exit\")
+	pass # Replace with function body.
+"
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 322.5, 334.5 )
+
+[node name="Stage1" type="Node2D"]
+script = ExtResource( 9 )
+
+[node name="Area2D" type="Area2D" parent="."]
+script = SubResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( 925.5, 345.5 )
+shape = SubResource( 1 )
+
+[node name="TurnStates" type="Node" parent="."]
 script = ExtResource( 5 )
 
-[node name="ReadyState" type="Node" parent="Turn_States"]
+[node name="ReadyState" type="Node" parent="TurnStates"]
 script = ExtResource( 6 )
 
-[node name="DiceFreeState" type="Node" parent="Turn_States"]
+[node name="DiceFreeState" type="Node" parent="TurnStates"]
 script = ExtResource( 7 )
 
-[node name="DiceOccupiedState" type="Node" parent="Turn_States"]
+[node name="DiceOccupiedState" type="Node" parent="TurnStates"]
 script = ExtResource( 8 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -29,6 +70,7 @@ layer = -1
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
 margin_right = 1280.0
 margin_bottom = 720.0
+mouse_filter = 2
 color = Color( 0.195313, 0.195313, 0.195313, 1 )
 __meta__ = {
 "_edit_lock_": true
@@ -37,11 +79,14 @@ __meta__ = {
 [node name="Dice_Panel" parent="." instance=ExtResource( 1 )]
 position = Vector2( 20, 20 )
 
-[node name="Panel_1" parent="." instance=ExtResource( 2 )]
+[node name="Panel1" parent="." instance=ExtResource( 2 )]
 position = Vector2( 38, 192 )
 
-[node name="Panel_2" parent="Panel_1" instance=ExtResource( 4 )]
-position = Vector2( 0, 160 )
+[node name="Panel2" parent="." instance=ExtResource( 4 )]
+position = Vector2( 38, 352 )
 
-[node name="Panel_3" parent="Panel_1/Panel_2" instance=ExtResource( 3 )]
-position = Vector2( 0, 160 )
+[node name="Panel3" parent="." instance=ExtResource( 3 )]
+position = Vector2( 38, 512 )
+
+[connection signal="mouse_entered" from="Area2D" to="Area2D" method="_on_Area2D_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="Area2D" method="_on_Area2D_mouse_exited"]
