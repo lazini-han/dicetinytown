@@ -5,15 +5,12 @@ extends "res://Scripts/NoConnect/basestate.gd"
 func get_state_enum():
 	return get_parent().TurnState.DICE_FREE # 부모 노드에서 TurnState.READY 반환
 
-
+	
 func enter():
 	print("상태 진입: DICE_FREE")
-
+	Eventbus.emit_signal("change_target_slot","Shape") # 주사위 타깃 
+	
 
 func exit():
 	print("상태 종료: DICE_FREE")
 
-
-#func process(delta):
-	# READY 상태에서의 프레임별 처리 로직
-	#pass

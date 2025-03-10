@@ -2,7 +2,7 @@ extends Area2D
 
 const DICE_SCALE = 0.4
 
-var dice_value: int = -1
+var dice_value: int = 0
 
 export var dice_index: int
 export(Array, Texture) var dice_sprites = []
@@ -14,7 +14,7 @@ onready var collisionshape2D = $CollisionShape2D
 func _ready():	
 	visible = true
 
-	sprite.texture = dice_sprites[2]
+	sprite.texture = dice_sprites[0]
 	sprite.scale = Vector2(DICE_SCALE, DICE_SCALE)
 	collisionshape2D.scale = Vector2(DICE_SCALE, DICE_SCALE)
 
@@ -26,7 +26,7 @@ func set_dice(index:int, value:int): # 할당된 값으로 주사위 인덱스�
 
 
 func value_up(): # 주사위 값을 1 증가시키기, 6이면 정지
-	if dice_value < 5:
+	if dice_value < 6:
 		dice_value += 1
 		sprite.texture = dice_sprites[dice_value]
 	else:

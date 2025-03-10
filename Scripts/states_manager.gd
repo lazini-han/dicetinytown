@@ -5,6 +5,7 @@ enum TurnState {  # 상태 열거형
 	READY,
 	DICE_FREE,
 	DICE_OCCUPIED,
+	BLOCK_SETTING,
 }
 
 var current_state = null

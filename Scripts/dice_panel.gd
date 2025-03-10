@@ -51,6 +51,6 @@ func create_dice(): # 주사위를 DICE_NUMBER 만큼 생성하면서 랜덤값�
 		add_child(new_dice) # 씬 트리에 추가
 		dice_list.append(new_dice)
 		
-		var dice_value = randi() % 6  # 1-6 랜덤값 결정
+		var dice_value = randi() % 6 + 1 # 1-6 랜덤값 결정
 		dice_list[index].set_dice(index, dice_value)
 		
