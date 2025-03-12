@@ -23,8 +23,10 @@ func _on_Button_Roll_Dice_pressed(): # Roll Dice 버튼 눌림
 			dice.queue_free()
 		dice_list.clear()
 	create_dice()
+	
 	Eventbus.emit_signal("state_changed","DICE_FREE")
-
+	
+	
 
 func _on_Button_Confirm_pressed(): # Confirm 버튼 눌림
 	Eventbus.emit_signal("state_changed","READY")

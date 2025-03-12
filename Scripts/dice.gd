@@ -2,8 +2,7 @@ extends Area2D
 
 const DICE_SCALE = 0.4
 
-var dice_value: int = 0
-
+export var dice_value: int
 export var dice_index: int
 export(Array, Texture) var dice_sprites = []
 
@@ -46,13 +45,15 @@ func _on_Dice_input_event(viewport, event, shape_idx):
 		print("Mouse click pressed %d dice" % dice_index)
 		
 	elif event is InputEventMouseButton and not event.pressed:
-		Eventbus.emit_signal("clicked_dice", self)
-		print("Mouse click released %d dice" % dice_index)
+		if event.button_index == BUTTON_LEFT:
+			Eventbus.emit_signal("clicked_dice", self)
+			print("Mouse click released %d dice" % dice_index)
 
 
 func _on_Dice_mouse_entered():
-	print("Mouse entered %d dice" % dice_index)
-
+	#print("Mouse entered %d dice" % dice_index)
+	pass
 
 func _on_Dice_mouse_exited():
-	print("Mouse exited %d dice" % dice_index)
+	#print("Mouse exited %d dice" % dice_index)
+	pass

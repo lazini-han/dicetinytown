@@ -1,4 +1,4 @@
-extends "res://Scripts/NoConnect/basestate.gd"
+extends "res://Scripts/States/basestate.gd"
 
 # DICE_OCCUPIED 상태 구현
 

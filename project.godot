@@ -8,6 +8,22 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Reference",
+"class": "Command",
+"language": "GDScript",
+"path": "res://Scripts/Commands/command.gd"
+}, {
+"base": "Command",
+"class": "DiceMoveCommand",
+"language": "GDScript",
+"path": "res://Scripts/Commands/dice_move_command.gd"
+} ]
+_global_script_class_icons={
+"Command": "",
+"DiceMoveCommand": ""
+}
+
 [application]
 
 config/name="DiceTinyTown-Steam"

@@ -10,3 +10,7 @@ signal button_confirm_dice(active) # 버튼을 활성화 여부
 
 signal clicked_dice(dice) # 주사위를 클릭함
 signal change_target_slot(slot_name) # 클릭하면 마우스가 이동할 슬롯 변경
+
+signal slot_shape_occupied(dice, occupied) # occupied = true, unoccupied = false
+signal slot_building_occupied(dice, occupied) # occupied = true, unoccupied = false
+signal slot_nature_occupied(dice, occupied) # occupied = true, unoccupied = false

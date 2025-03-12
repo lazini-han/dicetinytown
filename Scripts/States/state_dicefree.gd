@@ -1,4 +1,4 @@
-extends "res://Scripts/NoConnect/basestate.gd"
+extends "res://Scripts/States/basestate.gd"
 
 # DICE_FREE 상태 구현
 
@@ -8,7 +8,7 @@ func get_state_enum():
 	
 func enter():
 	print("상태 진입: DICE_FREE")
-	Eventbus.emit_signal("change_target_slot","Shape") # 주사위 타깃 
+	get_parent().get_parent().command_stack = []
 	
 
 func exit():
