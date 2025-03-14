@@ -23,7 +23,7 @@ func _ready():
 			state_nodes[state_enum] = child
 			print(state_enum)
 	
-	yield(get_tree(), "idle_frame") # 시작 상태 설정 전에 한 프레임 기다리기
+	yield(get_tree(), "physics_frame")  # 충돌 검사 후 실행
 	change_state(TurnState.READY) # 시작 상태 
 
 

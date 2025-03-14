@@ -8,7 +8,8 @@ func get_state_enum():
 	
 func enter():
 	print("상태 진입: DICE_FREE")
-	get_parent().get_parent().command_stack = []
+	
+	#get_parent().get_parent().command_stack = [] 
 	
 
 func exit():

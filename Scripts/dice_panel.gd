@@ -1,58 +1,104 @@
 extends Node2D
 
 const DICE_NUMBER = 3
+const SLOT_NUMBER = 3
+const NUMBERS = 27 # 랜덤 넘버 생성 갯수
 
-var dice_scene:PackedScene = preload("res://Scenes/dice.tscn")
-var positions: Array = []
+var random_numbers: Array = []
+
 var dice_list: Array = []
+var ready_positions: Array = []
+var positions: Array = []
+var slots: Array
+var target_slot_index: int
+
+var command_stack = []
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	# 주사위들의 초기 위치 지정
-	positions = [$Position1.position, $Position2.position, $Position3.position, $Position4.position]
+	dice_list = [$Dice1, $Dice2, $Dice3]
+	ready_positions = [$ReadyPosition1.position, $ReadyPosition2.position, $ReadyPosition3.position]
+	positions = [$Position1.position, $Position2.position, $Position3.position]
+	slots = [$SlotShape, $SlotBuilding, $SlotNature]
+	
+	for index in range(0,DICE_NUMBER):		
+		var idice = dice_list[index]
+		idice.position = ready_positions[index]
+	
+	randomize_with_date_seed() # 오늘 날짜를 바탕으로 랠덤 시드 설정
+	for i in range(NUMBERS): 
+		random_numbers.append(randi() % 6 + 1)
 	
 	# 버튼 활성화 변경 신호 감지
-	Eventbus.connect("button_roll_dice", self, "_on_button_roll_dice")
-	Eventbus.connect("button_confirm_dice", self, "_on_button_confirm_dice")
-	
-	
-func _on_Button_Roll_Dice_pressed(): # Roll Dice 버튼 눌림
-	if dice_list != []: # 원래 있던 주사위 노드 제거
-		for dice in dice_list: 
-			dice.queue_free()
-		dice_list.clear()
-	create_dice()
-	
-	Eventbus.emit_signal("state_changed","DICE_FREE")
-	
-	
+	Eventbus.connect("ButtonRollDice_change", self, "_on_ButtonRollDice_change")
+	Eventbus.connect("ButtonConfirmDice_change", self, "_on_ButtonConfirmDice_change")
+	# 주사위 클릭 감지
+	Eventbus.connect("clicked_dice", self, "_on_clicked_dice")
+	Eventbus.connect("target_slot_update", self, "_on_target_slot_update")
 
-func _on_Button_Confirm_pressed(): # Confirm 버튼 눌림
+
+# ------ BUTTONS -------
+func _on_ButtonRollDice_pressed():
+	roll_dice()
+	Eventbus.emit_signal("state_changed","DICE_FREE")
+
+
+func _on_ButtonConfirm_pressed():
 	Eventbus.emit_signal("state_changed","READY")
 
 
-func _on_button_roll_dice(active): # Roll Dice 버튼 활성화 변경
+func _on_ButtonRollDice_change(active): # Roll Dice 버튼 활성화 변경
 	$ButtonRollDice.disabled = not active
 
 
-func _on_button_confirm_dice(active): # Confirm 버튼 활성화 변경
+func _on_ButtonConfirmDice_change(active): # Confirm 버튼 활성화 변경
 	$ButtonConfirm.disabled = not active
 
 
-func create_dice(): # 주사위를 DICE_NUMBER 만큼 생성하면서 랜덤값과 인덱스 할당
+# ------ FUNCTIONS ------
+func roll_dice(): 
 	for index in range(0,DICE_NUMBER):		
-		var new_dice = dice_scene.instance()
-		new_dice.position = positions[index] 
-		
-		# 주사위 속성 설정
-		new_dice.input_pickable = true
-		
-		add_child(new_dice) # 씬 트리에 추가
-		dice_list.append(new_dice)
-		
-		var dice_value = randi() % 6 + 1 # 1-6 랜덤값 결정
-		dice_list[index].set_dice(index, dice_value)
-		
-		print("Creating dice %d at position: %s with value: %d" % [index, positions[index], dice_value])
+		var idice = dice_list[index]
+		idice.position = positions[index] 
+		idice.roll_dice(random_numbers) # 주사위 굴리기
+		print("dice_panel.gd, roll_dice(), Dice %d Result %d" % [index, idice.dice_value])
+
+	command_stack.clear()
+	target_slot_index = 0
+
+
+# 날짜를 시드로 설정하는 함수
+func randomize_with_date_seed():
+	var current_date = Time.get_date_dict_from_system()
+	var seed_value = current_date["year"] * 10000 + current_date["month"] * 100 + current_date["day"]
+	randomize()  # 기본 랜덤화
+	seed(seed_value)  # 날짜를 시드로 설정
+
+
+func _on_clicked_dice(dice):
+	for slot in slots:
+		if slot.current_dice == dice:
+			print("Already occupied dice")
+			return
+	
+	var old_position = dice.global_position
+	var new_position = slots[target_slot_index].global_position + slots[target_slot_index].get_node("Sprite").texture.get_size() / 2
+	
+	var icommand = load("res://Scripts/Commands/command_dice_move.gd").new(dice, old_position, new_position)
+	#	var icommand = DiceMoveCommand.new(dice, old_position, new_position)
+	icommand.execute()
+	command_stack.append(icommand)
+	target_slot_index += 1
+	
+	
+func _input(event):
+	if event is InputEventMouseButton and event.button_index == BUTTON_RIGHT and not event.pressed:
+		print("Right clicked - UNDO")
+		if command_stack.size() > 0:
+			var last_command = command_stack.pop_back()
+			last_command.undo()  # 가장 최근의 명령 취소
+			target_slot_index -= 1
+
+
 		

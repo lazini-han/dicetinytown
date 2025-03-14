@@ -1,9 +1,7 @@
 extends Area2D
 
-const DICE_SCALE = 0.4
-
 export var dice_value: int
-export var dice_index: int
+export var dice_index: int # inspector에서 설정
 export(Array, Texture) var dice_sprites = []
 
 onready var sprite = $Sprite
@@ -12,17 +10,23 @@ onready var collisionshape2D = $CollisionShape2D
 # Called when the node enters the scene tree for the first time.
 func _ready():	
 	visible = true
-
+	dice_value = 0
 	sprite.texture = dice_sprites[0]
-	sprite.scale = Vector2(DICE_SCALE, DICE_SCALE)
-	collisionshape2D.scale = Vector2(DICE_SCALE, DICE_SCALE)
+	connect("input_event", self, "_on_input_event")
 
-
-func set_dice(index:int, value:int): # 할당된 값으로 주사위 인덱스와 값과 그림 변경
-	dice_index = index
+func set_dice(value:int): # 할당된 값으로 주사위 값 변경
 	dice_value = value
 	sprite.texture = dice_sprites[dice_value]
 
+
+func roll_dice(random_numbers:Array):
+	if random_numbers == []:
+		print("ERROR: dice.gd, roll_dice(), random_numbers is null")
+		dice_value = 0
+	else:
+		dice_value = random_numbers.pop_back() # 랜덤넘버 목록 값으로 주사위 값 변경
+	sprite.texture = dice_sprites[dice_value]
+	
 
 func value_up(): # 주사위 값을 1 증가시키기, 6이면 정지
 	if dice_value < 6:
@@ -40,20 +44,12 @@ func value_down(): # 주사위 값을 1 감소시키기, 1이면 정지
 		print("%d dice cannot decrease" % dice_index)
 
 
-func _on_Dice_input_event(viewport, event, shape_idx):
+func _on_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton and event.pressed:
-		print("Mouse click pressed %d dice" % dice_index)
+		#print("Mouse click pressed %d dice" % dice_index)
+		pass
 		
 	elif event is InputEventMouseButton and not event.pressed:
 		if event.button_index == BUTTON_LEFT:
 			Eventbus.emit_signal("clicked_dice", self)
 			print("Mouse click released %d dice" % dice_index)
-
-
-func _on_Dice_mouse_entered():
-	#print("Mouse entered %d dice" % dice_index)
-	pass
-
-func _on_Dice_mouse_exited():
-	#print("Mouse exited %d dice" % dice_index)
-	pass
