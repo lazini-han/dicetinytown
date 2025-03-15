@@ -10,7 +10,7 @@
 [ext_resource path="res://Scripts/States/state_diceoccupied.gd" type="Script" id=8]
 [ext_resource path="res://Scripts/stage_1.gd" type="Script" id=9]
 [ext_resource path="res://Scripts/panel_shape.gd" type="Script" id=10]
-[ext_resource path="res://Scripts/slots.gd" type="Script" id=11]
+[ext_resource path="res://Scenes/board.gd" type="Script" id=11]
 [ext_resource path="res://Scripts/dice.gd" type="Script" id=12]
 [ext_resource path="res://Images/dice_6.png" type="Texture" id=13]
 [ext_resource path="res://Images/dice_2.png" type="Texture" id=14]
@@ -74,12 +74,12 @@ margin_bottom = 108.0
 text = "Roll
 Dice"
 
-[node name="ButtonConfirm" type="Button" parent="DicePanel"]
+[node name="ButtonUndo" type="Button" parent="DicePanel"]
 margin_left = 464.0
 margin_top = 20.0
 margin_right = 560.0
 margin_bottom = 108.0
-text = "Confirm"
+text = "Undo"
 
 [node name="Dice1" type="Area2D" parent="DicePanel"]
 position = Vector2( 192, 64 )
@@ -191,10 +191,34 @@ texture = ExtResource( 2 )
 position = Vector2( 64, 65 )
 shape = SubResource( 3 )
 
-[node name="Slots" type="Node2D" parent="."]
+[node name="Board" type="Node2D" parent="."]
 script = ExtResource( 11 )
 
+[node name="ColorRect3" type="ColorRect" parent="Board"]
+margin_left = 632.0
+margin_top = 168.0
+margin_right = 1216.0
+margin_bottom = 672.0
+mouse_filter = 2
+color = Color( 0.25098, 0.4, 0.384314, 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Block" type="Node2D" parent="."]
+visible = false
+position = Vector2( 640, 20 )
+
+[node name="ColorRect2" type="ColorRect" parent="Block"]
+margin_left = -8.0
+margin_top = -236.0
+margin_right = 184.0
+margin_bottom = -43.0
+mouse_filter = 2
+color = Color( 0.25098, 0.4, 0.384314, 1 )
+
 [connection signal="pressed" from="DicePanel/ButtonRollDice" to="DicePanel" method="_on_ButtonRollDice_pressed"]
+[connection signal="pressed" from="DicePanel/ButtonUndo" to="DicePanel" method="_on_ButtonUndo_pressed"]
 [connection signal="area_entered" from="DicePanel/SlotShape" to="DicePanel/SlotShape" method="_on_SlotShape_area_entered"]
 [connection signal="area_exited" from="DicePanel/SlotShape" to="DicePanel/SlotShape" method="_on_SlotShape_area_exited"]
 [connection signal="area_entered" from="DicePanel/SlotBuilding" to="DicePanel/SlotBuilding" method="_on_SlotBuilding_area_entered"]

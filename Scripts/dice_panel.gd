@@ -32,7 +32,7 @@ func _ready():
 	
 	# 버튼 활성화 변경 신호 감지
 	Eventbus.connect("ButtonRollDice_change", self, "_on_ButtonRollDice_change")
-	Eventbus.connect("ButtonConfirmDice_change", self, "_on_ButtonConfirmDice_change")
+	Eventbus.connect("ButtonUndo_change", self, "_on_ButtonUndo_change")
 	# 주사위 클릭 감지
 	Eventbus.connect("clicked_dice", self, "_on_clicked_dice")
 	Eventbus.connect("target_slot_update", self, "_on_target_slot_update")
@@ -44,16 +44,20 @@ func _on_ButtonRollDice_pressed():
 	Eventbus.emit_signal("state_changed","DICE_FREE")
 
 
-func _on_ButtonConfirm_pressed():
-	Eventbus.emit_signal("state_changed","READY")
-
+func _on_ButtonUndo_pressed():
+	if command_stack.size() > 0:
+		var last_command = command_stack.pop_back()
+		last_command.undo()  # 가장 최근의 명령 취소
+		target_slot_index -= 1
+	if command_stack.size() == 0:
+		_on_ButtonUndo_change(false) 
 
 func _on_ButtonRollDice_change(active): # Roll Dice 버튼 활성화 변경
 	$ButtonRollDice.disabled = not active
 
 
-func _on_ButtonConfirmDice_change(active): # Confirm 버튼 활성화 변경
-	$ButtonConfirm.disabled = not active
+func _on_ButtonUndo_change(active): # Undo 버튼 활성화 변경
+	$ButtonUndo.disabled = not active
 
 
 # ------ FUNCTIONS ------
@@ -89,16 +93,15 @@ func _on_clicked_dice(dice):
 	#	var icommand = DiceMoveCommand.new(dice, old_position, new_position)
 	icommand.execute()
 	command_stack.append(icommand)
+	if command_stack.size() > 0 :
+		_on_ButtonUndo_change(true) 
 	target_slot_index += 1
 	
 	
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == BUTTON_RIGHT and not event.pressed:
-		print("Right clicked - UNDO")
-		if command_stack.size() > 0:
-			var last_command = command_stack.pop_back()
-			last_command.undo()  # 가장 최근의 명령 취소
-			target_slot_index -= 1
+		print("Right clicked")
+
 
 
 		

@@ -8,12 +8,12 @@ func get_state_enum():
 
 func enter():
 	print("상태 진입: DICE OCCUPIED")
-	Eventbus.emit_signal("button_confirm_dice",true) # 주사위 확정 버튼 활성화
-
+	# 블록 보여주기
+	
 
 func exit():
 	print("상태 종료: DICE OCCUPIED")
-	Eventbus.emit_signal("button_confirm_dice",false) # 주사위 확정 버튼 비활성화
+	# 블록 보여주기
 
 
 #func process(delta):
