@@ -18,10 +18,16 @@ _global_script_classes=[ {
 "class": "DiceMoveCommand",
 "language": "GDScript",
 "path": "res://Scripts/Commands/command_dice_move.gd"
+}, {
+"base": "Reference",
+"class": "TetrominoData",
+"language": "GDScript",
+"path": "res://Scripts/NoConnect/block_types.gd"
 } ]
 _global_script_class_icons={
 "Command": "",
-"DiceMoveCommand": ""
+"DiceMoveCommand": "",
+"TetrominoData": ""
 }
 
 [application]
@@ -32,6 +38,7 @@ run/main_scene="res://Scenes/start_menu.tscn"
 [autoload]
 
 Eventbus="*res://Scripts/NoConnect/event_bus.gd"
+BlockTypes="*res://Scripts/NoConnect/block_types.gd"
 
 [display]
 

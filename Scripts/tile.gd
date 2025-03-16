@@ -26,6 +26,8 @@ func set_state(state):
 		$Sprite.texture = preload("res://Images/tile_empty.png")
 	elif state == "filled":
 		$Sprite.texture = preload("res://Images/tile_filled.png")
+	elif state == "not_show":
+		$Sprite.texture = null
 	else:
 		print("tile.gd, set_state, ", state, " state is not defined.")
 
