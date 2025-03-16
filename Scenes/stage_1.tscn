@@ -194,6 +194,13 @@ shape = SubResource( 3 )
 [node name="Board" type="Node2D" parent="."]
 script = ExtResource( 11 )
 
+[node name="ButtonRotate" type="Button" parent="Board"]
+margin_left = 640.0
+margin_top = 40.0
+margin_right = 736.0
+margin_bottom = 128.0
+text = "Rotate"
+
 [node name="ColorRect3" type="ColorRect" parent="Board"]
 margin_left = 632.0
 margin_top = 168.0
@@ -225,3 +232,4 @@ color = Color( 0.25098, 0.4, 0.384314, 1 )
 [connection signal="area_exited" from="DicePanel/SlotBuilding" to="DicePanel/SlotBuilding" method="_on_SlotBuilding_area_exited"]
 [connection signal="area_entered" from="DicePanel/SlotNature" to="DicePanel/SlotNature" method="_on_SlotNature_area_entered"]
 [connection signal="area_exited" from="DicePanel/SlotNature" to="DicePanel/SlotNature" method="_on_SlotNature_area_exited"]
+[connection signal="pressed" from="Board/ButtonRotate" to="Board" method="_on_ButtonRotate_pressed"]

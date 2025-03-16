@@ -8,11 +8,13 @@ func get_state_enum():
 
 func enter():
 	print("상태 진입: DICE OCCUPIED")
+	Eventbus.emit_signal("tile_ready", true) # 보드판에 타일 준비 가능
 	# 블록 보여주기
 	
 
 func exit():
 	print("상태 종료: DICE OCCUPIED")
+	Eventbus.emit_signal("tile_ready", false) # 보드판에 타일 준비 가능
 	# 블록 보여주기
 
 

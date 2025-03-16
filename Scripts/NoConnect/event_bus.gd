@@ -10,4 +10,9 @@ signal ButtonRollDice_change(active)
 signal ButtonUndo_change(active)
 
 signal clicked_dice(dice) # 주사위를 클릭함
-signal target_slot_update() # 주사위 이동시 target slot 변경
+
+signal tile_ready(active) # 보드에 타일 놓기 가능 상태
+signal shape_selected(shape_type) # 블록 모양 결정
+
+signal mouse_on_tile(grid_position) # 타일에 올라간 마우스 인식
+signal mouse_off_tile(grid_position) # 타일에 올라간 마우스 인식

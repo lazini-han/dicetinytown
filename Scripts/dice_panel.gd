@@ -52,6 +52,7 @@ func _on_ButtonUndo_pressed():
 	if command_stack.size() == 0:
 		_on_ButtonUndo_change(false) 
 
+
 func _on_ButtonRollDice_change(active): # Roll Dice 버튼 활성화 변경
 	$ButtonRollDice.disabled = not active
 
@@ -105,3 +106,4 @@ func _input(event):
 
 
 		
+
