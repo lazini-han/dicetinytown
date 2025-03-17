@@ -1,4 +1,3 @@
-# Dice Move
 class_name DiceMoveCommand
 extends "res://Scripts/Commands/command.gd" 
 #extends Command
@@ -16,9 +15,7 @@ func _init(dice_node, init_pos, final_pos):
 
 func execute():
 	dice.global_position = final
-	Eventbus.emit_signal("target_slot_update")
 	
 
 func undo():
 	dice.global_position = init
-	Eventbus.emit_signal("target_slot_update")

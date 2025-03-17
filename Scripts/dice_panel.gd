@@ -12,8 +12,6 @@ var positions: Array = []
 var slots: Array
 var target_slot_index: int
 
-var command_stack = []
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -35,7 +33,6 @@ func _ready():
 	Eventbus.connect("ButtonUndo_change", self, "_on_ButtonUndo_change")
 	# 주사위 클릭 감지
 	Eventbus.connect("clicked_dice", self, "_on_clicked_dice")
-	Eventbus.connect("target_slot_update", self, "_on_target_slot_update")
 
 
 # ------ BUTTONS -------
@@ -45,11 +42,11 @@ func _on_ButtonRollDice_pressed():
 
 
 func _on_ButtonUndo_pressed():
-	if command_stack.size() > 0:
-		var last_command = command_stack.pop_back()
+	if GameManager.command_stack.size() > 0:
+		var last_command = GameManager.command_stack.pop_back()
 		last_command.undo()  # 가장 최근의 명령 취소
 		target_slot_index -= 1
-	if command_stack.size() == 0:
+	if GameManager.command_stack.size() == 0:
 		_on_ButtonUndo_change(false) 
 
 
@@ -69,7 +66,7 @@ func roll_dice():
 		idice.roll_dice(random_numbers) # 주사위 굴리기
 		print("dice_panel.gd, roll_dice(), Dice %d Result %d" % [index, idice.dice_value])
 
-	command_stack.clear()
+	GameManager.command_stack.clear()
 	target_slot_index = 0
 
 
@@ -93,8 +90,8 @@ func _on_clicked_dice(dice):
 	var icommand = load("res://Scripts/Commands/command_dice_move.gd").new(dice, old_position, new_position)
 	#	var icommand = DiceMoveCommand.new(dice, old_position, new_position)
 	icommand.execute()
-	command_stack.append(icommand)
-	if command_stack.size() > 0 :
+	GameManager.command_stack.append(icommand)
+	if GameManager.command_stack.size() > 0 :
 		_on_ButtonUndo_change(true) 
 	target_slot_index += 1
 	

@@ -1,3 +1,4 @@
+extends Node 
 class_name TetrominoData
 
 # 모든 테트로미노의 모든 회전 및 뒤집기 형태를 저장

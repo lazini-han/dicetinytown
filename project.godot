@@ -20,6 +20,11 @@ _global_script_classes=[ {
 "path": "res://Scripts/Commands/command_dice_move.gd"
 }, {
 "base": "Reference",
+"class": "ShapePlaceCommand",
+"language": "GDScript",
+"path": "res://Scripts/Commands/command_shape_place.gd"
+}, {
+"base": "Node",
 "class": "TetrominoData",
 "language": "GDScript",
 "path": "res://Scripts/NoConnect/block_types.gd"
@@ -27,6 +32,7 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "Command": "",
 "DiceMoveCommand": "",
+"ShapePlaceCommand": "",
 "TetrominoData": ""
 }
 
@@ -39,6 +45,7 @@ run/main_scene="res://Scenes/start_menu.tscn"
 
 Eventbus="*res://Scripts/NoConnect/event_bus.gd"
 BlockTypes="*res://Scripts/NoConnect/block_types.gd"
+GameManager="*res://Scripts/NoConnect/game_manager.gd"
 
 [display]
 
