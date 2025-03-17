@@ -127,6 +127,6 @@ func show_preview():
 	for y in range(preview_size.y):
 		for x in range(preview_size.x):
 			preview_tiles[y][x].set_state("not_show")
-			
+
 	for block_tile in block:
-		preview_tiles[block_tile.y][block_tile.x].set_state("filled")					
+		preview_tiles[block_tile.y+1][block_tile.x+1].set_state("filled")					

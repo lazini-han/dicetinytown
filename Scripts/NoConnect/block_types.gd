@@ -26,54 +26,54 @@ const all_tetrominos = [
 	
 	# 2: I 블록
 	[
-		[Vector2(0,0), Vector2(0,1), Vector2(0,2), Vector2(0,3)], # 기본
-		[Vector2(0,0), Vector2(1,0), Vector2(2,0), Vector2(3,0)], # 90도 회전
-		[Vector2(0,0), Vector2(0,1), Vector2(0,2), Vector2(0,3)], # 180도 회전 (기본과 동일)
-		[Vector2(0,0), Vector2(1,0), Vector2(2,0), Vector2(3,0)], # 270도 회전 (90도와 동일)
+		[Vector2(0,-1), Vector2(0,0), Vector2(0,1), Vector2(0,2)], # 기본
+		[Vector2(-1,0), Vector2(0,0), Vector2(1,0), Vector2(2,0)], # 90도 회전
+		[Vector2(0,-1), Vector2(0,0), Vector2(0,1), Vector2(0,2)], # 기본
+		[Vector2(-1,0), Vector2(0,0), Vector2(1,0), Vector2(2,0)], # 90도 회전
 		# 좌우 뒤집기 (I 블록은 좌우 뒤집어도 같은 형태)
-		[Vector2(0,0), Vector2(0,1), Vector2(0,2), Vector2(0,3)], # 뒤집은 기본
-		[Vector2(0,0), Vector2(1,0), Vector2(2,0), Vector2(3,0)], # 뒤집고 90도 회전
-		[Vector2(0,0), Vector2(0,1), Vector2(0,2), Vector2(0,3)], # 뒤집고 180도 회전
-		[Vector2(0,0), Vector2(1,0), Vector2(2,0), Vector2(3,0)]  # 뒤집고 270도 회전
+		[Vector2(0,-1), Vector2(0,0), Vector2(0,1), Vector2(0,2)], # 기본
+		[Vector2(-1,0), Vector2(0,0), Vector2(1,0), Vector2(2,0)], # 90도 회전
+		[Vector2(0,-1), Vector2(0,0), Vector2(0,1), Vector2(0,2)], # 기본
+		[Vector2(-1,0), Vector2(0,0), Vector2(1,0), Vector2(2,0)], # 90도 회전
 	],
 	
 	# 3: S 블록
 	[
-		[Vector2(0,0), Vector2(0,1), Vector2(1,1), Vector2(1,2)], # 기본
-		[Vector2(0,1), Vector2(1,0), Vector2(1,1), Vector2(2,0)], # 90도 회전
-		[Vector2(0,0), Vector2(0,1), Vector2(1,1), Vector2(1,2)], # 180도 회전 (기본과 동일)
-		[Vector2(0,1), Vector2(1,0), Vector2(1,1), Vector2(2,0)], # 270도 회전 (90도와 동일)
+		[Vector2(0,-1), Vector2(0,0), Vector2(1,0), Vector2(1,1)], # 기본
+		[Vector2(-1,1), Vector2(0,0), Vector2(0,1), Vector2(1,0)], # 90도 회전
+		[Vector2(0,-1), Vector2(0,0), Vector2(1,0), Vector2(1,1)], # 180도 회전 (기본과 동일)
+		[Vector2(-1,1), Vector2(0,0), Vector2(0,1), Vector2(1,0)], # 270도 회전 (90도와 동일)
 		# 좌우 뒤집기 (Z 블록이 됨)
-		[Vector2(0,1), Vector2(0,2), Vector2(1,0), Vector2(1,1)], # 뒤집은 기본
-		[Vector2(0,0), Vector2(1,0), Vector2(1,1), Vector2(2,1)], # 뒤집고 90도 회전
-		[Vector2(0,1), Vector2(0,2), Vector2(1,0), Vector2(1,1)], # 뒤집고 180도 회전
-		[Vector2(0,0), Vector2(1,0), Vector2(1,1), Vector2(2,1)]  # 뒤집고 270도 회전
+		[Vector2(0,-1), Vector2(0,0), Vector2(-1,0), Vector2(-1,1)], # 기본
+		[Vector2(-1,1), Vector2(0,0), Vector2(0,1), Vector2(1,0)], # 90도 회전
+		[Vector2(0,-1), Vector2(0,0), Vector2(-1,0), Vector2(-1,1)], # 기본
+		[Vector2(1,1), Vector2(0,0), Vector2(0,1), Vector2(-1,0)], # 270도 회전 (90도와 동일)		
 	],
 	
 	# 4: T 블록
 	[
-		[Vector2(0,0), Vector2(1,0), Vector2(1,1), Vector2(2,0)], # 기본
-		[Vector2(0,0), Vector2(0,1), Vector2(0,2), Vector2(1,1)], # 90도 회전
-		[Vector2(0,1), Vector2(1,0), Vector2(1,1), Vector2(2,1)], # 180도 회전
-		[Vector2(0,1), Vector2(1,0), Vector2(1,1), Vector2(1,2)], # 270도 회전
+		[Vector2(-1,0), Vector2(0,-1), Vector2(0,0), Vector2(1,0)], # 180도 회전
+		[Vector2(-1,0), Vector2(0,-1), Vector2(0,0), Vector2(0,1)], # 270도 회전
+		[Vector2(-1,0), Vector2(0,0), Vector2(0,1), Vector2(1,0)], # 기본
+		[Vector2(0,-1), Vector2(0,0), Vector2(0,1), Vector2(1,0)], # 90도 회전
 		# 좌우 뒤집기
-		[Vector2(0,0), Vector2(1,0), Vector2(1,1), Vector2(2,0)], # 뒤집은 기본 (좌우 대칭이므로 변화 없음)
-		[Vector2(0,1), Vector2(1,0), Vector2(1,1), Vector2(1,2)], # 뒤집고 90도 회전
-		[Vector2(0,1), Vector2(1,0), Vector2(1,1), Vector2(2,1)], # 뒤집고 180도 회전 (좌우 대칭이므로 변화 없음)
-		[Vector2(0,0), Vector2(0,1), Vector2(0,2), Vector2(1,1)]  # 뒤집고 270도 회전
+		[Vector2(-1,0), Vector2(0,-1), Vector2(0,0), Vector2(1,0)], # 180도 회전
+		[Vector2(0,-1), Vector2(0,0), Vector2(0,1), Vector2(1,0)], # 90도 회전
+		[Vector2(-1,0), Vector2(0,0), Vector2(0,1), Vector2(1,0)], # 기본
+		[Vector2(-1,0), Vector2(0,-1), Vector2(0,0), Vector2(0,1)], # 270도 회전
 	],
 	
 	# 5: L 블록
 	[
-		[Vector2(0,0), Vector2(0,1), Vector2(1,1), Vector2(2,1)], # 기본
-		[Vector2(0,0), Vector2(1,0), Vector2(0,1), Vector2(0,2)], # 90도 회전
-		[Vector2(0,0), Vector2(1,0), Vector2(2,0), Vector2(2,1)], # 180도 회전
-		[Vector2(0,2), Vector2(1,0), Vector2(1,1), Vector2(1,2)], # 270도 회전
+		[Vector2(-1,-1), Vector2(-1,0), Vector2(0,0), Vector2(1,0)], # 기본
+		[Vector2(0,-1), Vector2(1,-1), Vector2(0,0), Vector2(0,1)], # 90도 회전
+		[Vector2(-1,0), Vector2(0,0), Vector2(1,0), Vector2(1,1)], # 180도 회전
+		[Vector2(-1,1), Vector2(0,-1), Vector2(0,0), Vector2(0,1)], # 270도 회전
 		# 좌우 뒤집기 (J 블록이 됨)
-		[Vector2(0,1), Vector2(1,1), Vector2(2,0), Vector2(2,1)], # 뒤집은 기본
-		[Vector2(0,0), Vector2(0,1), Vector2(0,2), Vector2(1,2)], # 뒤집고 90도 회전
-		[Vector2(0,0), Vector2(0,1), Vector2(1,0), Vector2(2,0)], # 뒤집고 180도 회전
-		[Vector2(0,0), Vector2(1,0), Vector2(1,1), Vector2(1,2)]  # 뒤집고 270도 회전
+		[Vector2(1,-1), Vector2(-1,0), Vector2(0,0), Vector2(1,0)], # 
+		[Vector2(0,-1), Vector2(-1,-1), Vector2(0,0), Vector2(0,1)], # 90도 회전
+		[Vector2(-1,0), Vector2(0,0), Vector2(1,0), Vector2(-1,1)], # 180도 회전
+		[Vector2(1,1), Vector2(0,-1), Vector2(0,0), Vector2(0,1)], # 270도 회전
 	],
 	
 	# 6: O 블록 (회전/뒤집기해도 모양이 동일)

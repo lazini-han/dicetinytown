@@ -37,7 +37,6 @@ func _on_mouse_exited():
 	Eventbus.emit_signal("mouse_off_tile", grid_position, onboardtile)
 
 
-
 func _on_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton and event.pressed:
 		#print("Mouse click pressed %d dice" % dice_index)
