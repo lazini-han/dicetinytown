@@ -94,13 +94,3 @@ func _on_clicked_dice(dice):
 	if GameManager.command_stack.size() > 0 :
 		_on_ButtonUndo_change(true) 
 	target_slot_index += 1
-	
-	
-func _input(event):
-	if event is InputEventMouseButton and event.button_index == BUTTON_RIGHT and not event.pressed:
-		print("Right clicked")
-
-
-
-		
-

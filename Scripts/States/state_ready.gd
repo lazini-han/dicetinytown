@@ -9,7 +9,7 @@ func get_state_enum():
 func enter():
 	print("상태 진입: READY")
 	Eventbus.emit_signal("ButtonRollDice_change",true) # 주사위 굴림 활성화
-	Eventbus.emit_signal("ButtonUndo_change",false) # 주사위 확정 버튼 비활성화
+	Eventbus.emit_signal("ButtonUndo_change",false) # Undo 버튼 비활성화
 	
 
 func exit():

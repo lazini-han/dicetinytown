@@ -5,9 +5,9 @@ enum TurnState {  # 상태 열거형
 	READY,
 	DICE_FREE,
 	DICE_OCCUPIED,
-	SHAPE_SELECTED,
-	BUILD_SELECTED,
-	NATURE_SELECTED,
+	SHAPE_PHASE,
+	BUILDING_PHASE,
+	NATURE_PHASE,
 }
 
 var current_state = null

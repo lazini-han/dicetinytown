@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Scripts/dice_panel.gd" type="Script" id=1]
 [ext_resource path="res://Images/d6_outline.png" type="Texture" id=2]
@@ -19,6 +19,7 @@
 [ext_resource path="res://Images/dice_5.png" type="Texture" id=17]
 [ext_resource path="res://Images/dice_0.png" type="Texture" id=18]
 [ext_resource path="res://Images/dice_1.png" type="Texture" id=19]
+[ext_resource path="res://Scripts/States/state_buildingphase.gd" type="Script" id=20]
 
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 56, 56 )
@@ -40,6 +41,9 @@ script = ExtResource( 7 )
 
 [node name="DiceOccupiedState" type="Node" parent="TurnStates"]
 script = ExtResource( 8 )
+
+[node name="BuildingPhase" type="Node" parent="TurnStates"]
+script = ExtResource( 20 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = -1

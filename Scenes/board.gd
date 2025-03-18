@@ -53,8 +53,7 @@ func _ready():
 			tile.set_state("not_show")
 			add_child(tile)
 			preview_tiles[y].append(tile)
-	
-	
+
 
 func _on_tile_ready(active):
 	tile_ready = active
@@ -65,6 +64,7 @@ func _on_shape_selected(shape_type):
 	block = tetrominos.get_tetromino(block_type, block_rotation, block_flip)		
 	show_preview()
 	
+# Preview Blocks
 func _on_mouse_on_tile(grid_position, onboardtile):
 	if tile_ready == true and onboardtile:
 		var fill_tiles = _find_possible_tiles(grid_position, block, "empty")
@@ -87,7 +87,16 @@ func _on_mouse_off_tile(grid_position, onboardtile):
 					tiles[y][x].set_state("empty")
 
 
+func show_preview():
+	for y in range(preview_size.y):
+		for x in range(preview_size.x):
+			preview_tiles[y][x].set_state("not_show")
 
+	for block_tile in block:
+		preview_tiles[block_tile.y+1][block_tile.x+1].set_state("filled")					
+
+
+# Place the Block
 func _on_clicked_tile(grid_position, onboardtile):
 	if tile_ready == true and onboardtile:
 		print("tile_ready true and board true")
@@ -98,7 +107,7 @@ func _on_clicked_tile(grid_position, onboardtile):
 			icommand.execute()
 			GameManager.command_stack.append(icommand)
 			print("Command Shape Place")
-		pass
+			Eventbus.emit_signal("state_changed","BUILDING_PHASE")
 
 
 func _find_possible_tiles(origin, select_block, state): # state 상태인 tile 뽑아내기
@@ -110,6 +119,7 @@ func _find_possible_tiles(origin, select_block, state): # state 상태인 tile �
 						if tiles[y][x].state == state:
 							found_tiles.append(Vector2(x,y))
 	return found_tiles	
+
 
 func _on_ButtonRotate_pressed():
 	block_rotation = (block_rotation + 1) % 4
@@ -123,10 +133,3 @@ func _on_ButtonFlip_pressed():
 	show_preview()
 
 
-func show_preview():
-	for y in range(preview_size.y):
-		for x in range(preview_size.x):
-			preview_tiles[y][x].set_state("not_show")
-
-	for block_tile in block:
-		preview_tiles[block_tile.y+1][block_tile.x+1].set_state("filled")					
