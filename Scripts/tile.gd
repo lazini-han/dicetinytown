@@ -1,14 +1,10 @@
 extends Area2D
 
+signal clicked_tile(grid_position)
 
 export var grid_position = Vector2()  # 게임판 내 위치 (0,0 ~ 2,2)
 export var onboardtile = false
 export var state = ""
-
-
-func _ready():
-	pass
-
 
 func set_state(tile_state):
 	state = tile_state
@@ -38,12 +34,8 @@ func _on_mouse_exited():
 
 
 func _on_input_event(viewport, event, shape_idx):
-	if event is InputEventMouseButton and event.pressed:
-		#print("Mouse click pressed %d dice" % dice_index)
-		pass
-		
-	elif event is InputEventMouseButton and not event.pressed:
+	if event is InputEventMouseButton and not event.pressed:
 		if event.button_index == BUTTON_LEFT:
-			Eventbus.emit_signal("clicked_tile", grid_position, onboardtile)
+			Eventbus.emit_signal("clicked_tile", grid_position)
 			print("Mouse click released tile ", grid_position)
 
