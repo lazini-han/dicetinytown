@@ -14,15 +14,35 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/Commands/command.gd"
 }, {
-"base": "Reference",
-"class": "DiceMoveCommand",
+"base": "Node",
+"class": "DiceManager",
 "language": "GDScript",
-"path": "res://Scripts/Commands/command_dice_move.gd"
+"path": "res://Scripts/DiceSystem/dice_manager.gd"
+}, {
+"base": "Reference",
+"class": "DiceMoveToSlotCommand",
+"language": "GDScript",
+"path": "res://Scripts/Commands/command_dice_move_to_slot.gd"
+}, {
+"base": "Node",
+"class": "DiceSystem",
+"language": "GDScript",
+"path": "res://Scripts/DiceSystem/dice_system.gd"
 }, {
 "base": "Reference",
 "class": "ShapePlaceCommand",
 "language": "GDScript",
 "path": "res://Scripts/Commands/command_shape_place.gd"
+}, {
+"base": "Area2D",
+"class": "SingleDice",
+"language": "GDScript",
+"path": "res://Scripts/DiceSystem/dice.gd"
+}, {
+"base": "Node",
+"class": "SlotManager",
+"language": "GDScript",
+"path": "res://Scripts/DiceSystem/slot_manager.gd"
 }, {
 "base": "Node",
 "class": "TetrominoData",
@@ -31,8 +51,12 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Command": "",
-"DiceMoveCommand": "",
+"DiceManager": "",
+"DiceMoveToSlotCommand": "",
+"DiceSystem": "",
 "ShapePlaceCommand": "",
+"SingleDice": "",
+"SlotManager": "",
 "TetrominoData": ""
 }
 
