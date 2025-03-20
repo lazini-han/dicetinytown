@@ -1,12 +1,10 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=8 format=2]
 
+[ext_resource path="res://Scripts/input_manager.gd" type="Script" id=1]
 [ext_resource path="res://Images/d6_outline.png" type="Texture" id=2]
-[ext_resource path="res://Scripts/States/states_manager.gd" type="Script" id=5]
-[ext_resource path="res://Scripts/States/state_ready.gd" type="Script" id=6]
-[ext_resource path="res://Scripts/States/state_dice_phase.gd" type="Script" id=7]
-[ext_resource path="res://Scripts/States/state_shape_phase.gd" type="Script" id=8]
+[ext_resource path="res://Scenes/stage_1.gd" type="Script" id=3]
+[ext_resource path="res://Classes/dice.gd" type="Script" id=4]
 [ext_resource path="res://Images/dice_0.png" type="Texture" id=18]
-[ext_resource path="res://Scripts/States/state_building_phase.gd" type="Script" id=20]
 
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 56, 56 )
@@ -15,21 +13,79 @@ extents = Vector2( 56, 56 )
 extents = Vector2( 41, 41 )
 
 [node name="Stage1" type="Node2D"]
+script = ExtResource( 3 )
 
-[node name="TurnStates" type="Node" parent="."]
-script = ExtResource( 5 )
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 596.0
+margin_bottom = 148.0
+mouse_filter = 2
+color = Color( 0.25098, 0.4, 0.384314, 1 )
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="ReadyState" type="Node" parent="TurnStates"]
-script = ExtResource( 6 )
+[node name="ColorRect3" type="ColorRect" parent="."]
+margin_left = 632.0
+margin_top = 224.0
+margin_right = 1216.0
+margin_bottom = 672.0
+mouse_filter = 2
+color = Color( 0.25098, 0.4, 0.384314, 1 )
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="DiceFreeState" type="Node" parent="TurnStates"]
-script = ExtResource( 7 )
+[node name="ColorRect4" type="ColorRect" parent="."]
+margin_left = 632.0
+margin_top = 20.0
+margin_right = 808.0
+margin_bottom = 193.0
+mouse_filter = 2
+color = Color( 0.25098, 0.4, 0.384314, 1 )
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="DiceOccupiedState" type="Node" parent="TurnStates"]
-script = ExtResource( 8 )
+[node name="InputManager" type="Node" parent="."]
+script = ExtResource( 1 )
 
-[node name="BuildingPhase" type="Node" parent="TurnStates"]
-script = ExtResource( 20 )
+[node name="BackToMenu" type="Button" parent="InputManager"]
+margin_left = 1160.0
+margin_top = 16.0
+margin_right = 1261.0
+margin_bottom = 104.0
+text = "Back To Menu"
+
+[node name="ButtonRotate" type="Button" parent="InputManager"]
+margin_left = 872.0
+margin_top = 40.0
+margin_right = 968.0
+margin_bottom = 128.0
+text = "Rotate"
+
+[node name="ButtonFlip" type="Button" parent="InputManager"]
+margin_left = 992.0
+margin_top = 40.0
+margin_right = 1088.0
+margin_bottom = 128.0
+text = "Flip"
+
+[node name="ButtonRollDice" type="Button" parent="InputManager"]
+margin_left = 36.0
+margin_top = 40.0
+margin_right = 132.0
+margin_bottom = 128.0
+text = "Roll
+Dice"
+
+[node name="ButtonUndo" type="Button" parent="InputManager"]
+margin_left = 484.0
+margin_top = 40.0
+margin_right = 580.0
+margin_bottom = 128.0
+text = "Undo"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = -1
@@ -43,189 +99,96 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="DicePanel" type="Node2D" parent="."]
-position = Vector2( 20, 20 )
-
-[node name="ColorRect" type="ColorRect" parent="DicePanel"]
-margin_right = 576.0
-margin_bottom = 128.0
-mouse_filter = 2
-color = Color( 0.25098, 0.4, 0.384314, 1 )
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="ButtonRollDice" type="Button" parent="DicePanel"]
-margin_left = 16.0
-margin_top = 20.0
-margin_right = 112.0
-margin_bottom = 108.0
-text = "Roll
-Dice"
-
-[node name="ButtonUndo" type="Button" parent="DicePanel"]
-margin_left = 464.0
-margin_top = 20.0
-margin_right = 560.0
-margin_bottom = 108.0
-text = "Undo"
-
-[node name="Dice1" type="Area2D" parent="DicePanel"]
-position = Vector2( 192, 64 )
+[node name="Dice1" type="Area2D" parent="."]
+position = Vector2( 212, 84 )
 scale = Vector2( 0.4, 0.4 )
+script = ExtResource( 4 )
 
-[node name="Sprite" type="Sprite" parent="DicePanel/Dice1"]
+[node name="Sprite" type="Sprite" parent="Dice1"]
 texture = ExtResource( 18 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DicePanel/Dice1"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Dice1"]
 shape = SubResource( 4 )
 
-[node name="Dice2" type="Area2D" parent="DicePanel"]
-position = Vector2( 288, 64 )
+[node name="Dice2" type="Area2D" parent="."]
+position = Vector2( 308, 84 )
 scale = Vector2( 0.4, 0.4 )
+script = ExtResource( 4 )
 
-[node name="Sprite" type="Sprite" parent="DicePanel/Dice2"]
+[node name="Sprite" type="Sprite" parent="Dice2"]
 texture = ExtResource( 18 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DicePanel/Dice2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Dice2"]
 shape = SubResource( 4 )
 
-[node name="Dice3" type="Area2D" parent="DicePanel"]
-position = Vector2( 384, 64 )
+[node name="Dice3" type="Area2D" parent="."]
+position = Vector2( 404, 84 )
 scale = Vector2( 0.4, 0.4 )
+script = ExtResource( 4 )
 
-[node name="Sprite" type="Sprite" parent="DicePanel/Dice3"]
+[node name="Sprite" type="Sprite" parent="Dice3"]
 texture = ExtResource( 18 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DicePanel/Dice3"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Dice3"]
 shape = SubResource( 4 )
 
-[node name="ReadyPosition1" type="Position2D" parent="DicePanel"]
-position = Vector2( 192, -78 )
+[node name="Position1" type="Position2D" parent="."]
+position = Vector2( 212, 84 )
 __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="ReadyPosition2" type="Position2D" parent="DicePanel"]
-position = Vector2( 288, -78 )
+[node name="Position2" type="Position2D" parent="."]
+position = Vector2( 308, 84 )
 __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="ReadyPosition3" type="Position2D" parent="DicePanel"]
-position = Vector2( 384, -78 )
+[node name="Position3" type="Position2D" parent="."]
+position = Vector2( 404, 84 )
 __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Position1" type="Position2D" parent="DicePanel"]
-position = Vector2( 192, 64 )
-__meta__ = {
-"_edit_lock_": true
-}
+[node name="SlotShape" type="Area2D" parent="."]
+position = Vector2( 24, 192 )
 
-[node name="Position2" type="Position2D" parent="DicePanel"]
-position = Vector2( 288, 64 )
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="Position3" type="Position2D" parent="DicePanel"]
-position = Vector2( 384, 64 )
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="SlotShape" type="Area2D" parent="DicePanel"]
-position = Vector2( 4, 172 )
-
-[node name="Sprite" type="Sprite" parent="DicePanel/SlotShape"]
+[node name="Sprite" type="Sprite" parent="SlotShape"]
 position = Vector2( 64, 65 )
 texture = ExtResource( 2 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DicePanel/SlotShape"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SlotShape"]
 position = Vector2( 64, 65 )
 shape = SubResource( 3 )
 
-[node name="SlotBuilding" type="Area2D" parent="DicePanel"]
-position = Vector2( 4, 340 )
+[node name="SlotBuilding" type="Area2D" parent="."]
+position = Vector2( 24, 360 )
 
-[node name="Sprite" type="Sprite" parent="DicePanel/SlotBuilding"]
+[node name="Sprite" type="Sprite" parent="SlotBuilding"]
 position = Vector2( 64, 65 )
 texture = ExtResource( 2 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DicePanel/SlotBuilding"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SlotBuilding"]
 position = Vector2( 64, 65 )
 shape = SubResource( 3 )
 
-[node name="SlotNature" type="Area2D" parent="DicePanel"]
-position = Vector2( 4, 508 )
+[node name="SlotNature" type="Area2D" parent="."]
+position = Vector2( 24, 528 )
 
-[node name="Sprite" type="Sprite" parent="DicePanel/SlotNature"]
+[node name="Sprite" type="Sprite" parent="SlotNature"]
 position = Vector2( 64, 65 )
 texture = ExtResource( 2 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DicePanel/SlotNature"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SlotNature"]
 position = Vector2( 64, 65 )
 shape = SubResource( 3 )
 
-[node name="Board" type="Node2D" parent="."]
-
-[node name="ButtonRotate" type="Button" parent="Board"]
-margin_left = 872.0
-margin_top = 40.0
-margin_right = 968.0
-margin_bottom = 128.0
-text = "Rotate"
-
-[node name="ButtonFlip" type="Button" parent="Board"]
-margin_left = 992.0
-margin_top = 40.0
-margin_right = 1088.0
-margin_bottom = 128.0
-text = "Flip"
-
-[node name="ColorRect3" type="ColorRect" parent="Board"]
-margin_left = 632.0
-margin_top = 224.0
-margin_right = 1216.0
-margin_bottom = 672.0
-mouse_filter = 2
-color = Color( 0.25098, 0.4, 0.384314, 1 )
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="ColorRect4" type="ColorRect" parent="Board"]
-margin_left = 632.0
-margin_top = 20.0
-margin_right = 808.0
-margin_bottom = 193.0
-mouse_filter = 2
-color = Color( 0.25098, 0.4, 0.384314, 1 )
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="Block" type="Node2D" parent="."]
-visible = false
-position = Vector2( 640, 20 )
-
-[node name="ColorRect2" type="ColorRect" parent="Block"]
-margin_left = -8.0
-margin_top = -236.0
-margin_right = 184.0
-margin_bottom = -43.0
-mouse_filter = 2
-color = Color( 0.25098, 0.4, 0.384314, 1 )
-
-[connection signal="pressed" from="DicePanel/ButtonRollDice" to="DicePanel" method="_on_ButtonRollDice_pressed"]
-[connection signal="pressed" from="DicePanel/ButtonUndo" to="DicePanel" method="_on_ButtonUndo_pressed"]
-[connection signal="area_entered" from="DicePanel/SlotShape" to="DicePanel/SlotShape" method="_on_SlotShape_area_entered"]
-[connection signal="area_exited" from="DicePanel/SlotShape" to="DicePanel/SlotShape" method="_on_SlotShape_area_exited"]
-[connection signal="area_entered" from="DicePanel/SlotBuilding" to="DicePanel/SlotBuilding" method="_on_SlotBuilding_area_entered"]
-[connection signal="area_exited" from="DicePanel/SlotBuilding" to="DicePanel/SlotBuilding" method="_on_SlotBuilding_area_exited"]
-[connection signal="area_entered" from="DicePanel/SlotNature" to="DicePanel/SlotNature" method="_on_SlotNature_area_entered"]
-[connection signal="area_exited" from="DicePanel/SlotNature" to="DicePanel/SlotNature" method="_on_SlotNature_area_exited"]
-[connection signal="pressed" from="Board/ButtonRotate" to="Board" method="_on_ButtonRotate_pressed"]
-[connection signal="pressed" from="Board/ButtonFlip" to="Board" method="_on_ButtonFlip_pressed"]
+[connection signal="pressed" from="InputManager/BackToMenu" to="InputManager" method="_on_BackToMenu_pressed"]
+[connection signal="pressed" from="InputManager/ButtonRollDice" to="InputManager" method="_on_ButtonRollDice_pressed"]
+[connection signal="pressed" from="InputManager/ButtonUndo" to="InputManager" method="_on_ButtonUndo_pressed"]
+[connection signal="area_entered" from="SlotShape" to="SlotShape" method="_on_SlotShape_area_entered"]
+[connection signal="area_exited" from="SlotShape" to="SlotShape" method="_on_SlotShape_area_exited"]
+[connection signal="area_entered" from="SlotBuilding" to="SlotBuilding" method="_on_SlotBuilding_area_entered"]
+[connection signal="area_exited" from="SlotBuilding" to="SlotBuilding" method="_on_SlotBuilding_area_exited"]
+[connection signal="area_entered" from="SlotNature" to="SlotNature" method="_on_SlotNature_area_entered"]
+[connection signal="area_exited" from="SlotNature" to="SlotNature" method="_on_SlotNature_area_exited"]

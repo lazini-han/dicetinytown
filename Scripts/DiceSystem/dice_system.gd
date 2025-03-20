@@ -14,18 +14,11 @@ const SLOT_TYPE = {
 }
 
 var dice_manager = null
-var slot_manager = null
-#var command_stack = []  # 명령 스택 (실행 취소를 위해)
 
 
 # 초기화
 func _ready():
-	dice_manager = DiceManager.new()
-	slot_manager = SlotManager.new()
-	
-	add_child(dice_manager)
-	add_child(slot_manager)
-	
+		
 	# 이벤트 연결
 	dice_manager.connect("dice_selected", self, "_on_dice_selected")
 	dice_manager.connect("dice_rolled", self, "_on_dice_rolled")

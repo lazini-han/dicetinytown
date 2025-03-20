@@ -11,8 +11,6 @@ onready var sprite = $Sprite
 
 # Called when the node enters the scene tree for the first time.
 func _ready():	
-	visible = true
-	set_dice(0) # 초기 값 0
 	connect("input_event", self, "_on_input_event")
 
 
@@ -22,22 +20,6 @@ func set_dice(value:int): # 할당된 값으로 주사위 값 변경
 		sprite.texture = dice_sprites[value]
 	else:
 		print("ERROR: 유효하지 않은 주사위 값 - " + str(value))
-
-
-func value_up() -> bool:
-	if dice_value < 6:
-		dice_value += 1
-		sprite.texture = dice_sprites[dice_value]
-		return true
-	return false
-
-
-func value_down() -> bool:
-	if dice_value > 0:
-		dice_value -= 1
-		sprite.texture = dice_sprites[dice_value]
-		return true
-	return false
 
 
 # 마우스 클릭 이벤트 처리

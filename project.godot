@@ -12,32 +12,32 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "Command",
 "language": "GDScript",
-"path": "res://Scripts/Commands/command.gd"
+"path": "res://Classes/command.gd"
 }, {
 "base": "Node",
 "class": "DiceManager",
 "language": "GDScript",
-"path": "res://Scripts/DiceSystem/dice_manager.gd"
+"path": "res://Classes/dice_manager.gd"
 }, {
-"base": "Reference",
+"base": "",
 "class": "DiceMoveToSlotCommand",
 "language": "GDScript",
-"path": "res://Scripts/Commands/command_dice_move_to_slot.gd"
+"path": "res://Classes/command_dice_move_to_slot.gd"
 }, {
 "base": "Node",
 "class": "DiceSystem",
 "language": "GDScript",
 "path": "res://Scripts/DiceSystem/dice_system.gd"
 }, {
-"base": "Reference",
+"base": "",
 "class": "ShapePlaceCommand",
 "language": "GDScript",
-"path": "res://Scripts/Commands/command_shape_place.gd"
+"path": "res://Classes/command_shape_place.gd"
 }, {
 "base": "Area2D",
 "class": "SingleDice",
 "language": "GDScript",
-"path": "res://Scripts/DiceSystem/dice.gd"
+"path": "res://Classes/dice.gd"
 }, {
 "base": "Node",
 "class": "SlotManager",
@@ -47,7 +47,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "TetrominoData",
 "language": "GDScript",
-"path": "res://Scripts/NoConnect/block_types.gd"
+"path": "res://Classes/block_types.gd"
 } ]
 _global_script_class_icons={
 "Command": "",
@@ -67,9 +67,7 @@ run/main_scene="res://Scenes/start_menu.tscn"
 
 [autoload]
 
-Eventbus="*res://Scripts/NoConnect/event_bus.gd"
-BlockTypes="*res://Scripts/NoConnect/block_types.gd"
-GameManager="*res://Scripts/NoConnect/game_manager.gd"
+GameManager="*res://Scripts/Singleton/game_manager.gd"
 
 [display]
 

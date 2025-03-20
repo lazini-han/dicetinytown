@@ -1,10 +1,9 @@
 extends Node
 # 상태를 관리하고 변경하는 작업 진행하는 노드 
 
-enum TurnState {  # 상태 열거형
+enum State {  # 상태 열거형
 	READY,
-	DICE_FREE,
-	DICE_OCCUPIED,
+	DICE_PHASE,
 	SHAPE_PHASE,
 	BUILDING_PHASE,
 	NATURE_PHASE,
@@ -17,7 +16,7 @@ var state_nodes = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	Eventbus.connect("state_changed", self, "_on_state_changed") # 주사위가 굴림 결과 받기
+	#Eventbus.connect("state_changed", self, "_on_state_changed") # 주사위가 굴림 결과 받기
 	
 	for child in get_children(): # 자식 노드들을 상태 노드로 등록
 		if child.has_method("get_state_enum"):

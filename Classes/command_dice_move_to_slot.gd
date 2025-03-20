@@ -1,5 +1,5 @@
 class_name DiceMoveToSlotCommand
-extends "res://Scripts/Commands/command.gd" 
+extends "res://Scripts/Classes/command.gd" 
 #extends Command
 
 var init_pos: Vector2

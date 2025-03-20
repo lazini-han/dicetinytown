@@ -8,11 +8,11 @@ func get_state_enum():
 
 func enter():
 	print("상태 진입: BUILDING_PHASE")
-	Eventbus.emit_signal("build_ready", true) # 보드판에 빌딩 준비
+	#Eventbus.emit_signal("build_ready", true) # 보드판에 빌딩 준비
 	
 
 func exit():
 	print("상태 종료: BUILDING_PHASE")
-	Eventbus.emit_signal("build_ready", false) # 보드판에 빌딩 준비 해제
+	#Eventbus.emit_signal("build_ready", false) # 보드판에 빌딩 준비 해제
 
 

@@ -1,5 +1,5 @@
 class_name ShapePlaceCommand
-extends "res://Scripts/Commands/command.gd" 
+extends "res://Scripts/Classes/command.gd" 
 #extends Command
 
 var now_board: Array
