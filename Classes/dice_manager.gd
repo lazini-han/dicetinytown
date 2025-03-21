@@ -4,10 +4,14 @@
 class_name DiceManager
 extends Node
 
+signal dice_to_slot(dice,slot_index)
+
 var random_numbers: Array  # 주사위 랜덤 결과 목록 받아옴
 var dice_list: Array 
 var dice_positions: Array 
 var slot_list: Array 
+var target_slot_index: int
+var slot_occupied: Array = [null, null, null]
 
 func _ready():
 	pass
@@ -21,11 +25,13 @@ func initialize(dice_nodes, position_nodes, slot_nodes):
 	dice_list = dice_nodes
 	dice_positions = position_nodes 
 	slot_list = slot_nodes
+	target_slot_index = 0
 	
 	# 각 주사위 이벤트 연결
 	for i in range(dice_list.size()):
 		dice_list[i].connect("clicked", self, "_on_dice_clicked")
 		dice_list[i].dice_sprites = GameManager.dice_sprites
+		dice_list[i].dice_index = i
 		reset_dice(i)
 		
 
@@ -54,5 +60,23 @@ func roll_dice():
 
 
 # 주사위를 슬롯으로 보낼때
-func _on_dice_to_slot(dice, slot):
-	pass
+func dice_move_to_slot(dice, slot_index):
+	slot_occupied[slot_index] = dice
+	dice.position = slot_list[slot_index].get_node("Sprite").global_position
+	target_slot_index += 1
+	
+
+# 주사위를 슬롯에서 뺄따
+func dice_move_back(dice, slot_index):
+	slot_occupied[slot_index] = null
+	dice.position = dice_positions[dice.dice_index].position
+	target_slot_index -= 1
+
+
+func _on_dice_clicked(dice):
+	for idice in slot_occupied: # 현재 주사위가 slot에 있다면 클릭 무시
+		if idice == dice:
+			print("The clicked dice is already in an slot.")
+			return
+	
+	emit_signal("dice_to_slot", dice, target_slot_index)
