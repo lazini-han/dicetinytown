@@ -63,6 +63,7 @@ margin_left = 872.0
 margin_top = 40.0
 margin_right = 968.0
 margin_bottom = 128.0
+disabled = true
 text = "Rotate"
 
 [node name="ButtonFlip" type="Button" parent="InputManager"]
@@ -70,6 +71,7 @@ margin_left = 992.0
 margin_top = 40.0
 margin_right = 1088.0
 margin_bottom = 128.0
+disabled = true
 text = "Flip"
 
 [node name="ButtonRollDice" type="Button" parent="InputManager"]
@@ -77,6 +79,7 @@ margin_left = 36.0
 margin_top = 40.0
 margin_right = 132.0
 margin_bottom = 128.0
+disabled = true
 text = "Roll
 Dice"
 
@@ -85,6 +88,7 @@ margin_left = 484.0
 margin_top = 40.0
 margin_right = 580.0
 margin_bottom = 128.0
+disabled = true
 text = "Undo"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]

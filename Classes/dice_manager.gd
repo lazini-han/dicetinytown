@@ -10,10 +10,7 @@ var dice_positions: Array
 var slot_list: Array 
 
 func _ready():
-	# InputManager 노드를 찾아서 시그널 연결
-	var input_manager = get_node("../InputManager")
-	input_manager.connect("roll_dice", self, "_on_roll_dice")
-	
+	pass
 
 func set_random_numbers(value_list: Array): # Stage 시작시 매서드 호출로 받아오기
 	random_numbers = value_list.duplicate()
@@ -43,7 +40,10 @@ func reset_dice(index):
 
 	
 # 주사위 굴리기
-func _on_roll_dice():	
+func roll_dice():	
+	if random_numbers.size() < dice_list.size():
+		print("ERROR: 남은 랜덤값이 주사위수보다 적습니다")
+		return
 	# 각 주사위 위치 및 값 설정
 	for i in range(dice_list.size()):
 		reset_dice(i)

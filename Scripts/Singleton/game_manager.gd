@@ -33,7 +33,7 @@ func scene_change(scene_name):
 func game_start():
 	print("Game start")
 	
-	var scene_name = "STAGE_1"
+	var scene_name = "STAGE_1" # 나중에 세이브 기능이 생기면 변경할 것
 	current_scene = scene_name
 	scene_change(scene_name)
 	

@@ -14,8 +14,6 @@ var stage_data = {
 	]
 }
 
-var command_stack = []
-
 
 func _ready():
 	stage_data["dice_list"] = [
@@ -36,15 +34,13 @@ func _ready():
 		
 	var dice_manager = load(GameManager.classes["DiceManager"]).new()
 	add_child(dice_manager)
+	$InputManager.set_dice_manager(dice_manager)
 	
 	var dice_list = stage_data["dice_list"]
 	var dice_position_list = stage_data["dice_position_list"]
 	var slot_list = stage_data["slot_list"]
 	dice_manager.initialize(dice_list, dice_position_list, slot_list)
 	
-	
 	# 미리 설정된 주사위 값들 넣기
 	dice_manager.set_random_numbers(stage_data["dice_value"]) 
 	
-
-
