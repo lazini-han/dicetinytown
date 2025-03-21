@@ -28,7 +28,7 @@ func scene_change(scene_name):
 	print("Scene change: ", scene_name)
 	current_scene = scene_name
 	get_tree().change_scene(scenes[scene_name])  # 씬 변경
-	
+
 
 func game_start():
 	print("Game start")

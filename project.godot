@@ -9,11 +9,6 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Reference",
-"class": "Command",
-"language": "GDScript",
-"path": "res://Classes/command.gd"
-}, {
 "base": "Node",
 "class": "DiceManager",
 "language": "GDScript",
@@ -23,16 +18,6 @@ _global_script_classes=[ {
 "class": "DiceSystem",
 "language": "GDScript",
 "path": "res://Scripts/DiceSystem/dice_system.gd"
-}, {
-"base": "Reference",
-"class": "DiceToSlotCommand",
-"language": "GDScript",
-"path": "res://Classes/command_dice_to_slot.gd"
-}, {
-"base": "Reference",
-"class": "ShapePlaceCommand",
-"language": "GDScript",
-"path": "res://Classes/command_shape_place.gd"
 }, {
 "base": "Area2D",
 "class": "SingleDice",
@@ -50,11 +35,8 @@ _global_script_classes=[ {
 "path": "res://Classes/block_types.gd"
 } ]
 _global_script_class_icons={
-"Command": "",
 "DiceManager": "",
 "DiceSystem": "",
-"DiceToSlotCommand": "",
-"ShapePlaceCommand": "",
 "SingleDice": "",
 "SlotManager": "",
 "TetrominoData": ""

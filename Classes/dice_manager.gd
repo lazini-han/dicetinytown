@@ -5,6 +5,7 @@ class_name DiceManager
 extends Node
 
 signal dice_to_slot(dice,slot_index)
+signal slots_changed(slot_occupied)
 
 var random_numbers: Array  # 주사위 랜덤 결과 목록 받아옴
 var dice_list: Array 
@@ -63,13 +64,14 @@ func roll_dice():
 func dice_move_to_slot(dice, slot_index):
 	slot_occupied[slot_index] = dice
 	dice.position = slot_list[slot_index].get_node("Sprite").global_position
+	emit_signal("slots_changed", slot_occupied)
 	target_slot_index += 1
-	
 
 # 주사위를 슬롯에서 뺄따
 func dice_move_back(dice, slot_index):
 	slot_occupied[slot_index] = null
 	dice.position = dice_positions[dice.dice_index].position
+	emit_signal("slots_changed", slot_occupied)
 	target_slot_index -= 1
 
 
@@ -78,5 +80,6 @@ func _on_dice_clicked(dice):
 		if idice == dice:
 			print("The clicked dice is already in an slot.")
 			return
-	
+			
 	emit_signal("dice_to_slot", dice, target_slot_index)
+
