@@ -2,11 +2,13 @@ extends Node
 
 const scenes = {
 	"START_MENU" : "res://Scenes/start_menu.tscn",
-	"STAGE_1" : "res://Scenes/stage_1.tscn",
+	"STAGE" : "res://Scenes/stage.tscn",
 }
 const classes = {
-	"DiceManager" : "res://Classes/dice_manager.gd", # Dice와 Slot 을 컨트롤 하는 클래스
+	"DiceManager" : "res://Scripts/dice_manager.gd", # Dice와 Slot 을 컨트롤 하는 클래스
+	"TileManager" : "res://Scripts/tile_manager.gd", # Tile을 컨트롤 하는 클래스
 }
+var tile_scene = preload("res://Scripts/Classes/tile.tscn") # Tile Scene 사용
 var dice_sprites = [
 	load("res://Images/dice_0.png"),
 	load("res://Images/dice_1.png"),
@@ -16,6 +18,11 @@ var dice_sprites = [
 	load("res://Images/dice_5.png"),
 	load("res://Images/dice_6.png"),
 ]
+var tile_sprites = {
+	"Empty": load("res://Images/tile_empty.png"),
+	"Filled": load("res://Images/tile_filled.png"),
+	"Cannot": load("res://Images/tile_cannot.png"),
+}
 
 var current_scene = null
 
@@ -33,7 +40,7 @@ func scene_change(scene_name):
 func game_start():
 	print("Game start")
 	
-	var scene_name = "STAGE_1" # 나중에 세이브 기능이 생기면 변경할 것
+	var scene_name = "STAGE" # 나중에 세이브 기능이 생기면 변경할 것
 	current_scene = scene_name
 	scene_change(scene_name)
 	

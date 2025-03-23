@@ -23,6 +23,7 @@ func set_random_numbers(value_list: Array): # Stage 시작시 매서드 호출�
 
 # 주사위 초기화
 func initialize(dice_nodes, position_nodes, slot_nodes):
+	print("DiceManager initialize")
 	dice_list = dice_nodes
 	dice_positions = position_nodes 
 	slot_list = slot_nodes

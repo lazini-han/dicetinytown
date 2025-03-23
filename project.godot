@@ -12,34 +12,28 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "DiceManager",
 "language": "GDScript",
-"path": "res://Classes/dice_manager.gd"
+"path": "res://Scripts/dice_manager.gd"
 }, {
-"base": "Node",
-"class": "DiceSystem",
-"language": "GDScript",
-"path": "res://Scripts/DiceSystem/dice_system.gd"
-}, {
-"base": "Area2D",
+"base": "Reference",
 "class": "SingleDice",
 "language": "GDScript",
-"path": "res://Classes/dice.gd"
-}, {
-"base": "Node",
-"class": "SlotManager",
-"language": "GDScript",
-"path": "res://Scripts/DiceSystem/slot_manager.gd"
+"path": "res://Scripts/Classes/dice.gd"
 }, {
 "base": "Node",
 "class": "TetrominoData",
 "language": "GDScript",
-"path": "res://Classes/block_types.gd"
+"path": "res://Scripts/Classes/block_types.gd"
+}, {
+"base": "Node",
+"class": "TileManager",
+"language": "GDScript",
+"path": "res://Scripts/tile_manager.gd"
 } ]
 _global_script_class_icons={
 "DiceManager": "",
-"DiceSystem": "",
 "SingleDice": "",
-"SlotManager": "",
-"TetrominoData": ""
+"TetrominoData": "",
+"TileManager": ""
 }
 
 [application]

@@ -12,6 +12,7 @@ enum State {  # 상태 열거형
 }
 
 var DiceManager
+var TileManager
 
 var command_stack = []
 var init_state = "READY" # 세이브 기능 사용시 변경
@@ -25,6 +26,12 @@ func set_dice_manager(manager):
 	DiceManager = manager
 	DiceManager.connect("dice_to_slot", self, "_on_dice_to_slot")
 	DiceManager.connect("slots_changed", self, "_on_slots_changed")
+
+
+func set_tile_manager(manager):
+	TileManager = manager
+	TileManager.connect("selected_tile", self, "_on_selected_tile")
+	TileManager.connect("board_changed", self, "_on_board_changed")
 
 # Buttons Control
 func _on_BackToMenu_pressed():
