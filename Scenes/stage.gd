@@ -7,7 +7,6 @@ var stage_data = {
 	"dice_list" : [],
 	"dice_position_list" : [],
 	"slot_list" : [],
-	#"board_size" : Vector2(4,4),
 	"board" : [ 
 		[0,0,0,0],
 		[0,0,0,0],
@@ -49,7 +48,6 @@ func _ready():
 	dice_manager.initialize(dice_list, dice_position_list, slot_list)
 	dice_manager.set_random_numbers(stage_data["dice_value"]) # 미리 설정된 주사위 값들 넣기
 	
-	var board_size = stage_data["board_size"]
 	var board = stage_data["board"]
 	tile_manager.initialize(board)
 	

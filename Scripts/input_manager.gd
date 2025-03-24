@@ -17,6 +17,7 @@ var TileManager
 var command_stack = []
 var init_state = "READY" # 세이브 기능 사용시 변경
 var current_state
+var tile_selectable
 
 func _ready():
 	state_change(init_state)
@@ -80,8 +81,9 @@ func state_change(phase):
 		$ButtonUndo.disabled = true
 	elif phase == "DICE_PHASE":
 		$ButtonRollDice.disabled = true		
+		tile_selectable = false
 	elif phase == "SHAPE_PHASE":
-		pass # tile 클릭 가능하도록 변경
+		tile_selectable = true
 	elif phase == "BUILDING_PHASE":
 		pass # 특정 타일만 클릭 가능하도록 변경
 	elif phase == "NATURE_PHASE":
@@ -90,8 +92,19 @@ func state_change(phase):
 		print("ERROR: ", phase, " state is not defined")
 	
 
+func _on_selected_tile(tile):
+	if tile_selectable:
+		if current_state == "SHAPE_PHASE":
+			var command = ShapeSelectCommand.new(tile,TileManager, self)
+			command.execute()
+			command_stack.append(command)
+		elif current_state == "BUILDING_PHASE":
+			pass
 
-# Command List
+
+########################
+#     Command List
+########################
 class DiceToSlotCommand:
 	var dice
 	var slot_index
@@ -109,3 +122,24 @@ class DiceToSlotCommand:
 	func undo():
 		dice_manager.dice_move_back(dice, slot_index)
 		print("UNDO: DiceToSlot COMMAND")
+
+
+class ShapeSelectCommand:
+	var tile
+	var tile_manager
+	var input_manager
+	
+	func _init(tile_node, TileManager, node):
+		tile = tile_node
+		tile_manager = TileManager
+		input_manager = node
+		
+	func execute():
+		tile.set_state("Filled")
+		print("EXECUTE: ShapeSelect COMMAND")
+		input_manager.state_change("BUILDING_PHASE")
+		
+	func undo():
+		tile.set_state("Empty")
+		print("UNDO: ShapeSelect COMMAND")
+		input_manager.state_change("SHAPE_PHASE")

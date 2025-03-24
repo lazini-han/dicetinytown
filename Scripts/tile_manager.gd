@@ -23,7 +23,22 @@ func initialize(init_board):
 		for i in board[j].size():
 			var itile = GameManager.tile_scene.instance()
 			add_child(itile)
+			itile.connect("clicked_tile", self, "_on_clicked_tile")
+			itile.connect("mouse_on_tile", self, "_on_mouse_on_tile")
+			itile.connect("mouse_off_tile", self, "_on_mouse_off_tile")
 			itile.tile_sprites = GameManager.tile_sprites
-			itile.tile_grid_position = Vector2(i,j)
+			itile.grid_position = Vector2(i,j)
 			itile.position = Vector2(i*33, j*33) + offset
 			itile.set_state("Empty")
+
+func _on_clicked_tile(tile):
+	if tile.state == "Empty":
+		emit_signal("selected_tile", tile)
+
+
+func _on_mouse_on_tile(tile):
+	pass
+
+
+func _off_mouse_on_tile(tile):
+	pass

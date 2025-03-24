@@ -3,8 +3,9 @@ extends Area2D
 
 signal clicked_tile(tile)
 signal mouse_on_tile(tile)
+signal mouse_off_tile(tile)
 
-export var tile_grid_position: Vector2 # 게임판 내 위치 (0,0 ~ 2,2)
+export var grid_position: Vector2 # 게임판 내 위치 (0,0 ~ 2,2)
 export var state: String
 export(Dictionary) var tile_sprites = {}
 
@@ -21,14 +22,14 @@ func set_state(tile_state):
 	
 
 func get_grid():
-	return tile_grid_position
+	return grid_position
 
 
 func _on_Tile_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton and not event.pressed:
 		if event.button_index == BUTTON_LEFT:
 			emit_signal("clicked_tile", self)
-			print("Mouse click released tile ", tile_grid_position)
+			print("Mouse click released tile ", grid_position)
 
 
 func _on_Tile_mouse_entered():
