@@ -1,5 +1,5 @@
 extends Node 
-class_name TetrominoData
+class_name Shapes
 
 # 모든 테트로미노의 모든 회전 및 뒤집기 형태를 저장
 # 첫 번째 차원: 테트로미노 종류 (0: 빈 블록, 1: O, 2: I, 3: S, 4: T, 5: L)
@@ -90,7 +90,7 @@ const all_tetrominos = [
 ]
 
 # 테트로미노의 회전 상태를 반환하는 헬퍼 함수
-func get_tetromino(type: int, rotation: int, flipped: bool) -> Array:
+func get_shape(type: int, rotation: int, flipped: bool) -> Array:
 	# 유효하지 않은 타입 체크
 	if type < 0 or type >= all_tetrominos.size():
 		return []

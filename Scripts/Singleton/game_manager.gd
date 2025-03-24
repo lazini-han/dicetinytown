@@ -1,5 +1,10 @@
 extends Node
 
+# slot 에서 신호 보내고, board 쪽에서 받기
+signal slot_shape_change(value) 
+signal slot_building_change(value)
+signal slot_nature_change(value)
+
 const scenes = {
 	"START_MENU" : "res://Scenes/start_menu.tscn",
 	"STAGE" : "res://Scenes/stage.tscn",
@@ -7,6 +12,7 @@ const scenes = {
 const classes = {
 	"DiceManager" : "res://Scripts/dice_manager.gd", # Dice와 Slot 을 컨트롤 하는 클래스
 	"TileManager" : "res://Scripts/tile_manager.gd", # Tile을 컨트롤 하는 클래스
+	"Shapes" : "res://Scripts/Classes/block_types.gd", # Shape 의 구조 클래스
 }
 var tile_scene = preload("res://Scripts/Classes/tile.tscn") # Tile Scene 사용
 var dice_sprites = [
@@ -22,6 +28,7 @@ var tile_sprites = {
 	"Empty": load("res://Images/tile_empty.png"),
 	"Filled": load("res://Images/tile_filled.png"),
 	"Cannot": load("res://Images/tile_cannot.png"),
+	"Selected": load("res://Images/tile_selected.png"),
 }
 
 var current_scene = null

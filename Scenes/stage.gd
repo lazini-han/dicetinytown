@@ -49,7 +49,7 @@ func _ready():
 	dice_manager.set_random_numbers(stage_data["dice_value"]) # 미리 설정된 주사위 값들 넣기
 	
 	var board = stage_data["board"]
-	tile_manager.initialize(board)
+	tile_manager.initialize(board, $InputManager)
 	
 	
 	

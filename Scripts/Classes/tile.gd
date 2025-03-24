@@ -33,11 +33,11 @@ func _on_Tile_input_event(viewport, event, shape_idx):
 
 
 func _on_Tile_mouse_entered():
-	#yield(get_tree(), "physics_frame")  # 충돌 검사 후 실행
-	#yield(get_tree(), "idle_frame")  # 1프레임후 실행
+	yield(get_tree(), "physics_frame")  # 충돌 검사 후 실행
+	yield(get_tree(), "idle_frame")  # 1프레임후 실행
 	emit_signal("mouse_on_tile", self)
 
 
 func _on_Tile_mouse_exited():
-	#yield(get_tree(), "idle_frame")  # 1프레임후 실행
+	yield(get_tree(), "idle_frame")  # 1프레임후 실행
 	emit_signal("mouse_off_tile", self)

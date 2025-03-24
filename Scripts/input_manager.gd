@@ -92,14 +92,13 @@ func state_change(phase):
 		print("ERROR: ", phase, " state is not defined")
 	
 
-func _on_selected_tile(tile):
-	if tile_selectable:
-		if current_state == "SHAPE_PHASE":
-			var command = ShapeSelectCommand.new(tile,TileManager, self)
-			command.execute()
-			command_stack.append(command)
-		elif current_state == "BUILDING_PHASE":
-			pass
+func _on_selected_tile(selected_tiles):
+	if current_state == "SHAPE_PHASE":
+		var command = ShapeSelectCommand.new(selected_tiles, self)
+		command.execute()
+		command_stack.append(command)
+	elif current_state == "BUILDING_PHASE":
+		pass
 
 
 ########################
@@ -125,21 +124,21 @@ class DiceToSlotCommand:
 
 
 class ShapeSelectCommand:
-	var tile
-	var tile_manager
+	var tiles
 	var input_manager
 	
-	func _init(tile_node, TileManager, node):
-		tile = tile_node
-		tile_manager = TileManager
+	func _init(tile_nodes, node):
+		tiles = tile_nodes
 		input_manager = node
 		
 	func execute():
-		tile.set_state("Filled")
+		for tile in tiles:
+			tile.set_state("Filled")
 		print("EXECUTE: ShapeSelect COMMAND")
 		input_manager.state_change("BUILDING_PHASE")
 		
 	func undo():
-		tile.set_state("Empty")
+		for tile in tiles:
+			tile.set_state("Empty")
 		print("UNDO: ShapeSelect COMMAND")
 		input_manager.state_change("SHAPE_PHASE")

@@ -14,15 +14,15 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/dice_manager.gd"
 }, {
+"base": "Node",
+"class": "Shapes",
+"language": "GDScript",
+"path": "res://Scripts/Classes/block_types.gd"
+}, {
 "base": "Reference",
 "class": "SingleDice",
 "language": "GDScript",
 "path": "res://Scripts/Classes/dice.gd"
-}, {
-"base": "Node",
-"class": "TetrominoData",
-"language": "GDScript",
-"path": "res://Scripts/Classes/block_types.gd"
 }, {
 "base": "Node",
 "class": "TileManager",
@@ -31,8 +31,8 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "DiceManager": "",
+"Shapes": "",
 "SingleDice": "",
-"TetrominoData": "",
 "TileManager": ""
 }
 
