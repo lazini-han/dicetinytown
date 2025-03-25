@@ -21,6 +21,7 @@ var tile_selectable
 
 func _ready():
 	state_change(init_state)
+	GameManager.connect("shape_button_disable", self, "_on_shape_button_disable")
 
 
 func set_dice_manager(manager):
@@ -34,11 +35,8 @@ func set_tile_manager(manager):
 	TileManager.connect("selected_tile", self, "_on_selected_tile")
 	TileManager.connect("board_changed", self, "_on_board_changed")
 
+
 # Buttons Control
-func _on_BackToMenu_pressed():
-	GameManager.scene_change("START_MENU")
-
-
 func _on_ButtonRollDice_pressed():
 	DiceManager.roll_dice()
 	
@@ -52,7 +50,7 @@ func _on_ButtonUndo_pressed():
 	last_command.undo()
 	if command_stack.size() == 0:
 		$ButtonUndo.disabled = true
-	
+
 
 # Clicks Control
 func _on_dice_to_slot(dice, slot_index):
@@ -92,14 +90,24 @@ func state_change(phase):
 		print("ERROR: ", phase, " state is not defined")
 	
 
+func _on_shape_button_disable(disable):
+	$ButtonFlip.disabled = disable
+	$ButtonRotate.disabled = disable
+
+
 func _on_selected_tile(selected_tiles):
 	if current_state == "SHAPE_PHASE":
 		var command = ShapeSelectCommand.new(selected_tiles, self)
 		command.execute()
 		command_stack.append(command)
 	elif current_state == "BUILDING_PHASE":
+		var command = BuildingSelectCommand.new(selected_tiles[0], self)
+		command.execute()
+		command_stack.append(command)
+	elif current_state == "NATURE_PHASE":
 		pass
 
+	
 
 ########################
 #     Command List
@@ -142,3 +150,23 @@ class ShapeSelectCommand:
 			tile.set_state("Empty")
 		print("UNDO: ShapeSelect COMMAND")
 		input_manager.state_change("SHAPE_PHASE")
+
+
+class BuildingSelectCommand:
+	var tile
+	var input_manager
+	
+	func _init(tile_node, node):
+		tile = tile_node
+		input_manager = node
+		
+	func execute():
+		tile.set_state("Empty")
+		print("EXECUTE: BuildingSelect COMMAND")
+		input_manager.state_change("NATURE_PHASE")
+		
+	func undo():
+		tile.set_state("Filled")
+		print("UNDO: BuildingSelect COMMAND")
+		input_manager.state_change("BUILDING_PHASE")
+

@@ -3,7 +3,7 @@
 class_name TileManager
 extends Node
 
-signal selected_tile(tile)
+signal selected_tile(selected_tiles)
 signal board_changed(board)
 
 export var board: Array
@@ -32,6 +32,8 @@ func initialize(init_board, InputManager):
 	print("TileManager initialize")
 	input_manager = InputManager
 	shape_manager = load(GameManager.classes["Shapes"]).new()
+	GameManager.connect("shape_rotation", self, "_on_shape_rotation")
+	GameManager.connect("shape_flip", self, "_on_shape_flip")
 	
 	board = init_board
 	var offset = Vector2(700,300) # 임의로 보드판 시작 위치 설정
@@ -53,22 +55,27 @@ func initialize(init_board, InputManager):
 
 func _on_clicked_tile(tile):
 	if input_manager.tile_selectable:
-		var selected_tiles = []
-		for j in board.size():
-			for i in board[j].size():
-				if tiles[j][i].state == "Selected":
-					selected_tiles.append(tiles[j][i])
-		if selected_tiles.size() == shape_tiles.size():
-			emit_signal("selected_tile", selected_tiles)
-
+		if input_manager.current_state == "SHAPE_PHASE":
+			var selected_tiles = []
+			for j in board.size():
+				for i in board[j].size():
+					if tiles[j][i].state == "Selected":
+						selected_tiles.append(tiles[j][i])
+			if selected_tiles.size() == shape_tiles.size():
+				emit_signal("selected_tile", selected_tiles)
+		else:
+			emit_signal("selected_tile", [tile])
 
 func _on_mouse_on_tile(tile):
-	if input_manager.current_state == "SHAPE_PHASE":
+	var origin = tile.grid_position
+	if input_manager.current_state == "BUILDING_PHASE":
+		if tile.state == "Filled":
+			tile.set_state("Selected")
+		return
+	elif input_manager.current_state == "NATURE_PHASE":
+		return
+	elif shape_value > 0:
 		var empty_tiles = []
-		var origin = tile.grid_position
-		print(origin)
-		print(shape_tiles)
-		
 		for ishape in shape_tiles:
 			var x = ishape.x + origin.x
 			var y = ishape.y + origin.y
@@ -87,14 +94,32 @@ func _on_mouse_off_tile(tile):
 	for j in board.size():
 		for i in board[j].size():
 			var itile = tiles[j][i]
-			if itile.state == "Selected" or itile.state == "Cannot":
-				itile.set_state("Empty")
+			if input_manager.current_state == "DICE_PHASE" or input_manager.current_state == "SHAPE_PHASE":
+				if itile.state == "Selected" or itile.state == "Cannot":
+					itile.set_state("Empty")
+			if input_manager.current_state == "BUILDING_PHASE" or input_manager.current_state == "NATURE_PHASE":
+				if itile.state == "Selected":
+					itile.set_state("Filled")
 
 
 func _on_slot_shape_change(slot_value):
 	shape_value = slot_value
+	shape_tiles = shape_manager.get_shape(shape_value, shape_rotation, shape_flip)		
+	if shape_value > 0:
+		GameManager.emit_signal("shape_button_disable", false)
+	else:
+		GameManager.emit_signal("shape_button_disable", true)
+
+
+func _on_shape_rotation():
+	shape_rotation += 1
 	shape_tiles = shape_manager.get_shape(shape_value, shape_rotation, shape_flip)
-	
+
+
+func _on_shape_flip():
+	shape_flip = not shape_flip
+	shape_tiles = shape_manager.get_shape(shape_value, shape_rotation, shape_flip)
+
 
 func _on_slot_building_change(slot_value):
 	building_value = slot_value

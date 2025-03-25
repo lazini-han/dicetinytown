@@ -45,7 +45,7 @@ const all_tetrominos = [
 		[Vector2(-1,1), Vector2(0,0), Vector2(0,1), Vector2(1,0)], # 270도 회전 (90도와 동일)
 		# 좌우 뒤집기 (Z 블록이 됨)
 		[Vector2(0,-1), Vector2(0,0), Vector2(-1,0), Vector2(-1,1)], # 기본
-		[Vector2(1,1), Vector2(0,0), Vector2(0,1), Vector2(1,0)], # 90도 회전
+		[Vector2(1,1), Vector2(0,0), Vector2(0,1), Vector2(-1,0)], # 90도 회전
 		[Vector2(0,-1), Vector2(0,0), Vector2(-1,0), Vector2(-1,1)], # 기본
 		[Vector2(1,1), Vector2(0,0), Vector2(0,1), Vector2(-1,0)], # 270도 회전 (90도와 동일)		
 	],

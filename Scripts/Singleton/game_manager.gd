@@ -2,8 +2,13 @@ extends Node
 
 # slot 에서 신호 보내고, board 쪽에서 받기
 signal slot_shape_change(value) 
+signal shape_button_disable(disable)
 signal slot_building_change(value)
 signal slot_nature_change(value)
+
+# Button Signal
+signal shape_rotation() 
+signal shape_flip()
 
 const scenes = {
 	"START_MENU" : "res://Scenes/start_menu.tscn",

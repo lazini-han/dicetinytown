@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scripts/Classes/dice.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/input_manager.gd" type="Script" id=2]
@@ -8,6 +8,9 @@
 [ext_resource path="res://Scripts/slot_building.gd" type="Script" id=6]
 [ext_resource path="res://Scripts/slot_shape.gd" type="Script" id=7]
 [ext_resource path="res://Scripts/slot_nature.gd" type="Script" id=8]
+[ext_resource path="res://Scenes/button_back_to_menu.gd" type="Script" id=9]
+[ext_resource path="res://Scenes/button_rotate.gd" type="Script" id=10]
+[ext_resource path="res://Scenes/button_flip.gd" type="Script" id=11]
 
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 56, 56 )
@@ -60,6 +63,7 @@ margin_top = 16.0
 margin_right = 1261.0
 margin_bottom = 104.0
 text = "Back To Menu"
+script = ExtResource( 9 )
 
 [node name="ButtonRotate" type="Button" parent="InputManager"]
 margin_left = 872.0
@@ -68,6 +72,7 @@ margin_right = 968.0
 margin_bottom = 128.0
 disabled = true
 text = "Rotate"
+script = ExtResource( 10 )
 
 [node name="ButtonFlip" type="Button" parent="InputManager"]
 margin_left = 992.0
@@ -76,6 +81,7 @@ margin_right = 1088.0
 margin_bottom = 128.0
 disabled = true
 text = "Flip"
+script = ExtResource( 11 )
 
 [node name="ButtonRollDice" type="Button" parent="InputManager"]
 margin_left = 36.0
@@ -192,7 +198,9 @@ texture = ExtResource( 4 )
 position = Vector2( 64, 65 )
 shape = SubResource( 3 )
 
-[connection signal="pressed" from="InputManager/BackToMenu" to="InputManager" method="_on_BackToMenu_pressed"]
+[connection signal="pressed" from="InputManager/BackToMenu" to="InputManager/BackToMenu" method="_on_BackToMenu_pressed"]
+[connection signal="pressed" from="InputManager/ButtonRotate" to="InputManager/ButtonRotate" method="_on_ButtonRotate_pressed"]
+[connection signal="pressed" from="InputManager/ButtonFlip" to="InputManager/ButtonFlip" method="_on_ButtonFlip_pressed"]
 [connection signal="pressed" from="InputManager/ButtonRollDice" to="InputManager" method="_on_ButtonRollDice_pressed"]
 [connection signal="pressed" from="InputManager/ButtonUndo" to="InputManager" method="_on_ButtonUndo_pressed"]
 [connection signal="area_entered" from="SlotShape" to="SlotShape" method="_on_SlotShape_area_entered"]

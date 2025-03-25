@@ -19,7 +19,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/Classes/block_types.gd"
 }, {
-"base": "Reference",
+"base": "Area2D",
 "class": "SingleDice",
 "language": "GDScript",
 "path": "res://Scripts/Classes/dice.gd"
