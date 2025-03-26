@@ -1,18 +1,12 @@
-extends Area2D
+extends Slot
 
-const OCCUPIED = true
-const UNOCCUPIED = false
+func _ready():
+	slot_type = "Nature"
 
-var current_dice: Area2D
-var slot_value: int
 
 func _on_SlotNature_area_entered(area):
-	current_dice = area
-	slot_value = current_dice.dice_value
-	print("SlotNature is occupied by %d" % slot_value)
+	on_area_entered(area)
 
 
 func _on_SlotNature_area_exited(area):
-	if area == current_dice:
-		current_dice = null
-		print("SlotNature is unoccupied")
+	on_area_exited(area)

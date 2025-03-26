@@ -13,6 +13,7 @@ var input_manager
 var shape_manager
 
 # 독립 변수
+const INIT_BOARD = Vector2(700,300) # 임의로 보드판 시작 위치 설정
 var tiles = []
 var shape_tiles = []
 var shape_value = 0
@@ -36,7 +37,7 @@ func initialize(init_board, InputManager):
 	GameManager.connect("shape_flip", self, "_on_shape_flip")
 	
 	board = init_board
-	var offset = Vector2(700,300) # 임의로 보드판 시작 위치 설정
+	var offset = INIT_BOARD
 	
 	for j in board.size():
 		tiles.append([])
@@ -55,7 +56,7 @@ func initialize(init_board, InputManager):
 
 func _on_clicked_tile(tile):
 	if input_manager.tile_selectable:
-		if input_manager.current_state == "SHAPE_PHASE":
+		if input_manager.current_state == input_manager.State.SHAPE_PHASE:
 			var selected_tiles = []
 			for j in board.size():
 				for i in board[j].size():
@@ -68,11 +69,11 @@ func _on_clicked_tile(tile):
 
 func _on_mouse_on_tile(tile):
 	var origin = tile.grid_position
-	if input_manager.current_state == "BUILDING_PHASE":
+	if input_manager.current_state == input_manager.State.BUILDING_PHASE:
 		if tile.state == "Filled":
 			tile.set_state("Selected")
 		return
-	elif input_manager.current_state == "NATURE_PHASE":
+	elif input_manager.current_state == input_manager.State.NATURE_PHASE:
 		return
 	elif shape_value > 0:
 		var empty_tiles = []
@@ -94,10 +95,10 @@ func _on_mouse_off_tile(tile):
 	for j in board.size():
 		for i in board[j].size():
 			var itile = tiles[j][i]
-			if input_manager.current_state == "DICE_PHASE" or input_manager.current_state == "SHAPE_PHASE":
+			if input_manager.current_state == input_manager.State.DICE_PHASE or input_manager.current_state == input_manager.State.SHAPE_PHASE:
 				if itile.state == "Selected" or itile.state == "Cannot":
 					itile.set_state("Empty")
-			if input_manager.current_state == "BUILDING_PHASE" or input_manager.current_state == "NATURE_PHASE":
+			if input_manager.current_state == input_manager.State.BUILDING_PHASE or input_manager.current_state == input_manager.State.NATURE_PHASE:
 				if itile.state == "Selected":
 					itile.set_state("Filled")
 

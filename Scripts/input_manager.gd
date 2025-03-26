@@ -15,7 +15,7 @@ var DiceManager
 var TileManager
 
 var command_stack = []
-var init_state = "READY" # 세이브 기능 사용시 변경
+var init_state = State.READY # 세이브 기능 사용시 변경
 var current_state
 var tile_selectable
 
@@ -27,7 +27,7 @@ func _ready():
 func set_dice_manager(manager):
 	DiceManager = manager
 	DiceManager.connect("dice_to_slot", self, "_on_dice_to_slot")
-	DiceManager.connect("slots_changed", self, "_on_slots_changed")
+	DiceManager.connect("slot_state_changed", self, "_on_slot_state_changed")
 
 
 func set_tile_manager(manager):
@@ -36,11 +36,12 @@ func set_tile_manager(manager):
 	TileManager.connect("board_changed", self, "_on_board_changed")
 
 
-# Buttons Control
+##########################
+#     Buttons Control
+##########################
 func _on_ButtonRollDice_pressed():
 	DiceManager.roll_dice()
-	
-	state_change("DICE_PHASE")
+	state_change(State.DICE_PHASE)
 	command_stack.clear()
 	$ButtonRollDice.disabled = true
 
@@ -52,7 +53,14 @@ func _on_ButtonUndo_pressed():
 		$ButtonUndo.disabled = true
 
 
+func _on_shape_button_disable(disable):
+	$ButtonFlip.disabled = disable
+	$ButtonRotate.disabled = disable
+
+
+##########################
 # Clicks Control
+##########################
 func _on_dice_to_slot(dice, slot_index):
 	var command = DiceToSlotCommand.new(dice,slot_index,DiceManager)
 	command.execute()
@@ -60,51 +68,47 @@ func _on_dice_to_slot(dice, slot_index):
 	$ButtonUndo.disabled = false
 
 
-func _on_slots_changed(slot_occupied):
+func _on_slot_state_changed(slot_occupied):
 	var first_unoccupied_index = 3
 	for i in range(slot_occupied.size()):
 		if slot_occupied[i] == null:
 			first_unoccupied_index = i	
 	if first_unoccupied_index == 3:
-		state_change("SHAPE_PHASE")
-	elif current_state == "SHAPE_PHASE":
-		state_change("DICE_PHASE")
+		state_change(State.SHAPE_PHASE)
+	elif current_state == State.SHAPE_PHASE:
+		state_change(State.DICE_PHASE)
+
 
 # 단계 변화에 따른 인풋 컨트롤은 여기서 한다
-func state_change(phase):
-	current_state = phase
-	print("STATE: ", phase)
-	if phase == "READY":
+func state_change(new_state):
+	current_state = new_state	
+	print("STATE: ", State.keys()[new_state])
+	if new_state == State.READY:
 		$ButtonRollDice.disabled = false
 		$ButtonUndo.disabled = true
-	elif phase == "DICE_PHASE":
+	elif new_state == State.DICE_PHASE:
 		$ButtonRollDice.disabled = true		
 		tile_selectable = false
-	elif phase == "SHAPE_PHASE":
+	elif new_state == State.SHAPE_PHASE:
 		tile_selectable = true
-	elif phase == "BUILDING_PHASE":
-		pass # 특정 타일만 클릭 가능하도록 변경
-	elif phase == "NATURE_PHASE":
+	elif new_state == State.BUILDING_PHASE:
+		pass
+	elif new_state == State.NATURE_PHASE:
 		pass
 	else:
-		print("ERROR: ", phase, " state is not defined")
+		print("ERROR: ", State.keys()[new_state], " state is not defined")
 	
 
-func _on_shape_button_disable(disable):
-	$ButtonFlip.disabled = disable
-	$ButtonRotate.disabled = disable
-
-
 func _on_selected_tile(selected_tiles):
-	if current_state == "SHAPE_PHASE":
+	if current_state == State.SHAPE_PHASE:
 		var command = ShapeSelectCommand.new(selected_tiles, self)
 		command.execute()
 		command_stack.append(command)
-	elif current_state == "BUILDING_PHASE":
+	elif current_state == State.BUILDING_PHASE:
 		var command = BuildingSelectCommand.new(selected_tiles[0], self)
 		command.execute()
 		command_stack.append(command)
-	elif current_state == "NATURE_PHASE":
+	elif current_state == State.NATURE_PHASE:
 		pass
 
 	
@@ -143,13 +147,13 @@ class ShapeSelectCommand:
 		for tile in tiles:
 			tile.set_state("Filled")
 		print("EXECUTE: ShapeSelect COMMAND")
-		input_manager.state_change("BUILDING_PHASE")
+		input_manager.state_change(input_manager.State.BUILDING_PHASE)
 		
 	func undo():
 		for tile in tiles:
 			tile.set_state("Empty")
 		print("UNDO: ShapeSelect COMMAND")
-		input_manager.state_change("SHAPE_PHASE")
+		input_manager.state_change(input_manager.State.SHAPE_PHASE)
 
 
 class BuildingSelectCommand:
@@ -163,10 +167,10 @@ class BuildingSelectCommand:
 	func execute():
 		tile.set_state("Empty")
 		print("EXECUTE: BuildingSelect COMMAND")
-		input_manager.state_change("NATURE_PHASE")
+		input_manager.state_change(input_manager.State.NATURE_PHASE)
 		
 	func undo():
 		tile.set_state("Filled")
 		print("UNDO: BuildingSelect COMMAND")
-		input_manager.state_change("BUILDING_PHASE")
+		input_manager.state_change(input_manager.State.BUILDING_PHASE)
 

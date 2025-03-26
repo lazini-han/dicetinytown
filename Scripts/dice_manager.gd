@@ -5,7 +5,7 @@ class_name DiceManager
 extends Node
 
 signal dice_to_slot(dice,slot_index)
-signal slots_changed(slot_occupied)
+signal slot_state_changed(slot_occupied)
 
 var random_numbers: Array  # 주사위 랜덤 결과 목록 받아옴
 var dice_list: Array 
@@ -14,8 +14,10 @@ var slot_list: Array
 var target_slot_index: int
 var slot_occupied: Array = [null, null, null]
 
+
 func _ready():
 	pass
+
 
 func set_random_numbers(value_list: Array): # Stage 시작시 매서드 호출로 받아오기
 	random_numbers = value_list.duplicate()
@@ -35,7 +37,10 @@ func initialize(dice_nodes, position_nodes, slot_nodes):
 		dice_list[i].dice_sprites = GameManager.dice_sprites
 		dice_list[i].dice_index = i
 		reset_dice(i)
-		
+	# 각 슬롯 이벤트 연결
+	for i in range(slot_list.size()):
+		slot_list[i].connect("slot_changed", self, "_on_slot_changed")
+
 
 # 주사위 초기화 : 초기 위치, 보이지 않고 값을 없엔 상태
 func reset_dice(index):
@@ -44,14 +49,14 @@ func reset_dice(index):
 		dice_list[index].position = dice_positions[index].position
 		dice_list[index].set_dice(0)  
 		dice_list[index].visible = false
-			
 
-	
+
 # 주사위 굴리기
 func roll_dice():	
 	if random_numbers.size() < dice_list.size():
 		print("ERROR: 남은 랜덤값이 주사위수보다 적습니다")
-		return
+		while random_numbers.size() < dice_list.size():
+			random_numbers.append(0) # 모자란 랜덤값 만큼 ? 표시 값으로 설정
 	# 각 주사위 위치 및 값 설정
 	for i in range(dice_list.size()):
 		reset_dice(i)
@@ -65,14 +70,15 @@ func roll_dice():
 func dice_move_to_slot(dice, slot_index):
 	slot_occupied[slot_index] = dice
 	dice.position = slot_list[slot_index].get_node("Sprite").global_position
-	emit_signal("slots_changed", slot_occupied)
+	emit_signal("slot_state_changed", slot_occupied)
 	target_slot_index += 1
+
 
 # 주사위를 슬롯에서 뺄따
 func dice_move_back(dice, slot_index):
 	slot_occupied[slot_index] = null
 	dice.position = dice_positions[dice.dice_index].position
-	emit_signal("slots_changed", slot_occupied)
+	emit_signal("slot_state_changed", slot_occupied)
 	target_slot_index -= 1
 
 
@@ -83,4 +89,15 @@ func _on_dice_clicked(dice):
 			return
 			
 	emit_signal("dice_to_slot", dice, target_slot_index)
+
+
+func _on_slot_changed(slot_type, value):
+	if slot_type == "Shape":
+		GameManager.emit_signal("slot_shape_change", value)
+	elif slot_type == "Building":
+		GameManager.emit_signal("slot_building_change", value)
+	elif slot_type == "Nature":
+		GameManager.emit_signal("slot_nature_change", value)
+	else:
+		print(slot_type, " is not defined.")
 

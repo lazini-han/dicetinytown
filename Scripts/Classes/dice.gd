@@ -1,4 +1,4 @@
-class_name SingleDice
+class_name Dice
 extends Area2D
 
 signal clicked(dice)  
@@ -12,7 +12,6 @@ onready var sprite = $Sprite
 # Called when the node enters the scene tree for the first time.
 func _ready():	
 	connect("input_event", self, "_on_input_event")
-
 
 func set_dice(value:int): # 할당된 값으로 주사위 값 변경
 	dice_value = value
