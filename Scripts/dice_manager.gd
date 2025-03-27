@@ -54,9 +54,17 @@ func reset_dice(index):
 # 주사위 굴리기
 func roll_dice():	
 	if random_numbers.size() < dice_list.size():
-		print("ERROR: 남은 랜덤값이 주사위수보다 적습니다")
+		# 콘솔 로그와 함께 사용자에게 알림
+		print("WARNING: 남은 랜덤값이 주사위수보다 적습니다. 새로운 값을 생성합니다.")
+		# 부족한 값을 실제 랜덤 값으로 채움
 		while random_numbers.size() < dice_list.size():
-			random_numbers.append(0) # 모자란 랜덤값 만큼 ? 표시 값으로 설정
+			random_numbers.append(randi() % 6 + 1) # 1~6 사이의 랜덤값
+		
+		# 선택적으로 사용자에게 피드백 제공
+		# var popup = load("res://UI/warning_popup.tscn").instance()
+		# popup.set_message("주사위 데이터를 재생성했습니다.")
+		# add_child(popup)
+
 	# 각 주사위 위치 및 값 설정
 	for i in range(dice_list.size()):
 		reset_dice(i)
@@ -64,6 +72,11 @@ func roll_dice():
 		dice_list[i].set_dice(roll_value)
 		dice_list[i].visible = true
 		print("주사위 " + str(i) + " 결과: " + str(roll_value))
+	
+	# 슬롯 정보 비우기
+	target_slot_index = 0
+	slot_occupied = [null, null, null]
+	GameManager.emit_signal("tempted_tile_fixed")
 
 
 # 주사위를 슬롯으로 보낼때

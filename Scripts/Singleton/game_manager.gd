@@ -10,6 +10,8 @@ signal slot_nature_change(value)
 signal shape_rotation() 
 signal shape_flip()
 
+signal tempted_tile_fixed()
+
 const scenes = {
 	"START_MENU" : "res://Scenes/start_menu.tscn",
 	"STAGE" : "res://Scenes/stage.tscn",
@@ -32,9 +34,12 @@ var dice_sprites = [
 ]
 var tile_sprites = {
 	"Empty": load("res://Images/tile_empty.png"),
-	"Filled": load("res://Images/tile_filled.png"),
+	"Fixed": load("res://Images/tile_fixed.png"),
+	"MouseOver": load("res://Images/tile_mouse_over.png"),
 	"Cannot": load("res://Images/tile_cannot.png"),
 	"Selected": load("res://Images/tile_selected.png"),
+	"Filled": load("res://Images/tile_filled.png"),
+	"Temped": load("res://Images/tile_fixed.png"),
 }
 
 var current_scene = null

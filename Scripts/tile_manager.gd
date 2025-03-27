@@ -26,7 +26,7 @@ func _ready():
 	GameManager.connect("slot_shape_change", self, "_on_slot_shape_change")
 	GameManager.connect("slot_building_change", self, "_on_slot_building_change")
 	GameManager.connect("slot_nature_change", self, "_on_slot_nature_change")
-
+	
 
 # 타일 초기화
 func initialize(init_board, InputManager):
@@ -35,6 +35,8 @@ func initialize(init_board, InputManager):
 	shape_manager = load(GameManager.classes["Shapes"]).new()
 	GameManager.connect("shape_rotation", self, "_on_shape_rotation")
 	GameManager.connect("shape_flip", self, "_on_shape_flip")
+	GameManager.connect("tempted_tile_fixed", self, "_on_tempted_tile_fixed")
+	input_manager.connect("filled_star", self, "_on_filled_star")
 	
 	board = init_board
 	var offset = INIT_BOARD
@@ -60,7 +62,7 @@ func _on_clicked_tile(tile):
 			var selected_tiles = []
 			for j in board.size():
 				for i in board[j].size():
-					if tiles[j][i].state == "Selected":
+					if tiles[j][i].state == "MouseOver":
 						selected_tiles.append(tiles[j][i])
 			if selected_tiles.size() == shape_tiles.size():
 				emit_signal("selected_tile", selected_tiles)
@@ -68,12 +70,15 @@ func _on_clicked_tile(tile):
 			emit_signal("selected_tile", [tile])
 
 func _on_mouse_on_tile(tile):
+	if input_manager.tile_selectable == false:
+		if shape_value == 0:
+			return
+	if input_manager.current_state >= input_manager.State.END_PHASE:
+		return
 	var origin = tile.grid_position
-	if input_manager.current_state == input_manager.State.BUILDING_PHASE:
+	if input_manager.current_state >= input_manager.State.BUILDING_PHASE:
 		if tile.state == "Filled":
 			tile.set_state("Selected")
-		return
-	elif input_manager.current_state == input_manager.State.NATURE_PHASE:
 		return
 	elif shape_value > 0:
 		var empty_tiles = []
@@ -85,7 +90,7 @@ func _on_mouse_on_tile(tile):
 					empty_tiles.append(tiles[y][x])
 		if empty_tiles.size() == shape_tiles.size():
 			for itile in empty_tiles:
-				itile.set_state("Selected")
+				itile.set_state("MouseOver")
 		else:
 			for itile in empty_tiles:
 				itile.set_state("Cannot")
@@ -95,10 +100,10 @@ func _on_mouse_off_tile(tile):
 	for j in board.size():
 		for i in board[j].size():
 			var itile = tiles[j][i]
-			if input_manager.current_state == input_manager.State.DICE_PHASE or input_manager.current_state == input_manager.State.SHAPE_PHASE:
-				if itile.state == "Selected" or itile.state == "Cannot":
+			if input_manager.current_state >= input_manager.State.DICE_PHASE:
+				if itile.state == "MouseOver" or itile.state == "Cannot":
 					itile.set_state("Empty")
-			if input_manager.current_state == input_manager.State.BUILDING_PHASE or input_manager.current_state == input_manager.State.NATURE_PHASE:
+			if input_manager.current_state >= input_manager.State.BUILDING_PHASE:
 				if itile.state == "Selected":
 					itile.set_state("Filled")
 
@@ -128,4 +133,14 @@ func _on_slot_building_change(slot_value):
 
 func _on_slot_nature_change(slot_value):
 	nature_value = slot_value
-	
+
+
+func _on_tempted_tile_fixed():
+	for j in board.size():
+		for i in board[j].size():
+			var itile = tiles[j][i]
+			print(i,",",j," ", itile.state)
+			if itile.state == "Tempted":
+				itile.set_state("Fixed")
+			elif itile.state == "Filled": # Star 로 채울 타일
+				itile.set_state("Fixed")

@@ -3,12 +3,15 @@
 
 extends Node
 
+signal filled_star(fill)
+
 enum State {  # 상태 열거형
 	READY,
 	DICE_PHASE,
 	SHAPE_PHASE,
 	BUILDING_PHASE,
 	NATURE_PHASE,
+	END_PHASE,
 }
 
 var DiceManager
@@ -18,6 +21,7 @@ var command_stack = []
 var init_state = State.READY # 세이브 기능 사용시 변경
 var current_state
 var tile_selectable
+var count_nature = 0
 
 func _ready():
 	state_change(init_state)
@@ -44,6 +48,7 @@ func _on_ButtonRollDice_pressed():
 	state_change(State.DICE_PHASE)
 	command_stack.clear()
 	$ButtonRollDice.disabled = true
+	$ButtonUndo.disabled = true
 
 
 func _on_ButtonUndo_pressed():
@@ -87,14 +92,19 @@ func state_change(new_state):
 		$ButtonRollDice.disabled = false
 		$ButtonUndo.disabled = true
 	elif new_state == State.DICE_PHASE:
-		$ButtonRollDice.disabled = true		
+		$ButtonRollDice.disabled = true	
 		tile_selectable = false
+		count_nature = 0
 	elif new_state == State.SHAPE_PHASE:
 		tile_selectable = true
 	elif new_state == State.BUILDING_PHASE:
-		pass
+		tile_selectable = true
 	elif new_state == State.NATURE_PHASE:
-		pass
+		tile_selectable = true
+		$ButtonRollDice.disabled = true
+	elif new_state == State.END_PHASE:
+		tile_selectable = false
+		$ButtonRollDice.disabled = false		
 	else:
 		print("ERROR: ", State.keys()[new_state], " state is not defined")
 	
@@ -109,6 +119,11 @@ func _on_selected_tile(selected_tiles):
 		command.execute()
 		command_stack.append(command)
 	elif current_state == State.NATURE_PHASE:
+		count_nature += 1
+		var command = NatureSelectCommand.new(selected_tiles[0], self, count_nature)
+		command.execute()
+		command_stack.append(command)
+	
 		pass
 
 	
@@ -165,7 +180,7 @@ class BuildingSelectCommand:
 		input_manager = node
 		
 	func execute():
-		tile.set_state("Empty")
+		tile.set_state("Temped")
 		print("EXECUTE: BuildingSelect COMMAND")
 		input_manager.state_change(input_manager.State.NATURE_PHASE)
 		
@@ -173,4 +188,32 @@ class BuildingSelectCommand:
 		tile.set_state("Filled")
 		print("UNDO: BuildingSelect COMMAND")
 		input_manager.state_change(input_manager.State.BUILDING_PHASE)
+
+
+class NatureSelectCommand:
+	var tile
+	var input_manager
+	var count
+	
+	func _init(tile_node, node, count_nature):
+		tile = tile_node
+		input_manager = node
+		count = count_nature
+		
+		
+	func execute():
+		tile.set_state("Temped")
+		print("EXECUTE: NatureSelect COMMAND")
+		if count == 2:
+			input_manager.state_change(input_manager.State.END_PHASE)
+	func undo():
+		tile.set_state("Filled")
+		print("UNDO: NatureSelect COMMAND")
+		input_manager.count_nature -= 1
+		count -= 1
+		if count == 1:
+			input_manager.state_change(input_manager.State.NATURE_PHASE)
+		elif count == 0:
+			input_manager.state_change(input_manager.State.BUILDING_PHASE)
+		
 
