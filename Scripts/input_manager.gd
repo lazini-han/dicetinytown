@@ -89,10 +89,12 @@ func state_change(new_state):
 	current_state = new_state	
 	print("STATE: ", State.keys()[new_state])
 	if new_state == State.READY:
+		$ButtonRollDice.visible = true
 		$ButtonRollDice.disabled = false
 		$ButtonUndo.disabled = true
 	elif new_state == State.DICE_PHASE:
-		$ButtonRollDice.disabled = true	
+		$ButtonRollDice.visible = false	
+		$ButtonRollDice.disabled = true
 		tile_selectable = false
 		count_nature = 0
 	elif new_state == State.SHAPE_PHASE:
@@ -101,10 +103,12 @@ func state_change(new_state):
 		tile_selectable = true
 	elif new_state == State.NATURE_PHASE:
 		tile_selectable = true
+		$ButtonRollDice.visible = false
 		$ButtonRollDice.disabled = true
 	elif new_state == State.END_PHASE:
 		tile_selectable = false
-		$ButtonRollDice.disabled = false		
+		$ButtonRollDice.visible = true
+		$ButtonRollDice.disabled = false
 	else:
 		print("ERROR: ", State.keys()[new_state], " state is not defined")
 	
