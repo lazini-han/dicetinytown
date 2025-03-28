@@ -3,13 +3,11 @@ extends Area2D
 class_name Slot
 
 var current_dice: Area2D
-var slot_value: int
 var slot_type: String
+onready var slot_value: int
 
 signal slot_changed(slot_type, value)
 
-func _ready():
-	slot_value = 0
 	
 func on_area_entered(area):
 	current_dice = area

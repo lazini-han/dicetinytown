@@ -12,9 +12,6 @@ export(Dictionary) var tile_sprites = {}
 var sprite
 var collision
 
-func _ready():
-	pass
-
 
 func set_state(tile_state):
 	state = tile_state

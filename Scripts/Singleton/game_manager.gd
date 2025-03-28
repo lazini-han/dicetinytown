@@ -10,7 +10,7 @@ signal slot_nature_change(value)
 signal shape_rotation() 
 signal shape_flip()
 
-signal tempted_tile_fixed()
+signal tempted_tile_fixed() # confirm tiles
 
 const scenes = {
 	"START_MENU" : "res://Scenes/start_menu.tscn",
@@ -46,7 +46,7 @@ var current_scene = null
 
 
 func _ready():
-	print("GameManager initialized")
+	print("GameManager ready")
 
 
 func scene_change(scene_name):

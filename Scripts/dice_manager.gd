@@ -15,10 +15,6 @@ var target_slot_index: int
 var slot_occupied: Array = [null, null, null]
 
 
-func _ready():
-	pass
-
-
 func set_random_numbers(value_list: Array): # Stage 시작시 매서드 호출로 받아오기
 	random_numbers = value_list.duplicate()
 

@@ -1,5 +1,6 @@
 extends Slot
 
+
 func _ready():
 	slot_type = "Nature"
 

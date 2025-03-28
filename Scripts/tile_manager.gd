@@ -26,7 +26,7 @@ func _ready():
 	GameManager.connect("slot_shape_change", self, "_on_slot_shape_change")
 	GameManager.connect("slot_building_change", self, "_on_slot_building_change")
 	GameManager.connect("slot_nature_change", self, "_on_slot_nature_change")
-	
+
 
 # 타일 초기화
 func initialize(init_board, InputManager):
